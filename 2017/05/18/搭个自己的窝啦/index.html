@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/18/搭个自己的窝啦/index.html">
 <meta property="og:site_name" content="Xuan">
 <meta property="og:description" content="今天完成了HEXO+Github搭建自己的博客，当然，网上一堆文章，很好找，但也杂。这里推荐这一篇文章，2017年最新基于hexo搭建个人免费博客——从零开始。文章从HEXO安装，域名绑定，还有编写文章并部署到Github上以及安装主题等都有详细说明。半个月前，我确实是这么做了，不过呢，出现一个问题，我的博客在本地服务器可以看到，却无法部署到Github 。最后解决的方法是根目录配置文件_conf">
-<meta property="og:updated_time" content="2017-05-18T09:00:00.348Z">
+<meta property="og:updated_time" content="2017-06-07T02:36:54.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭个自己的窝啦">
 <meta name="twitter:description" content="今天完成了HEXO+Github搭建自己的博客，当然，网上一堆文章，很好找，但也杂。这里推荐这一篇文章，2017年最新基于hexo搭建个人免费博客——从零开始。文章从HEXO安装，域名绑定，还有编写文章并部署到Github上以及安装主题等都有详细说明。半个月前，我确实是这么做了，不过呢，出现一个问题，我的博客在本地服务器可以看到，却无法部署到Github 。最后解决的方法是根目录配置文件_conf">
@@ -322,7 +322,10 @@
 
       
         <p>今天完成了HEXO+Github搭建自己的博客，当然，网上一堆文章，很好找，但也杂。这里推荐这一篇文章，<a href="http://www.cduyzh.com/hexo-settings-1/#comments" target="_blank" rel="external">2017年最新基于hexo搭建个人免费博客——从零开始</a>。文章从HEXO安装，域名绑定，还有编写文章并部署到Github上以及安装主题等都有详细说明。半个月前，我确实是这么做了，不过呢，出现一个问题，我的博客在本地服务器可以看到，却无法部署到Github 。最后解决的方法是根目录配置文件<code>_config.yml</code>中拉到底部的部署配置有错，应该是与hexo版本有关，于是修改成：</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> deploy:</div><div class="line">   type: git</div><div class="line">   repo: https://github.com/xuanwu77/xuanwu77.github.io.git</div><div class="line">branch: master</div></pre></td></tr></table></figure>
+<pre><code>deploy:
+  type: git
+  repo: https://github.com/xuanwu77/xuanwu77.github.io.git
+  branch: master
 </code></pre><p>结果是成功了！那以后有可能的话，不犯懒的话，应该会更新博客吧。</p>
 
       
@@ -369,6 +372,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/07/CommonJS规范/" rel="prev" title="CommonJS规范">
+                CommonJS规范 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -431,7 +438,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -439,6 +446,15 @@
 
           
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>

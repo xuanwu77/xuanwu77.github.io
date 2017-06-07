@@ -1,0 +1,731 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CommonJS规范，JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="无论是学习webpack还是nodejs，都会发现文件一律被视为模块，而在不同模块间传递数据都会用到module.exports、exports导出模块，require来加载其他模块，这里主要就是介绍下他们所属的CommmonJS规范。">
+<meta name="keywords" content="CommonJS规范，JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CommonJS规范">
+<meta property="og:url" content="http://yoursite.com/2017/06/07/CommonJS规范/index.html">
+<meta property="og:site_name" content="Xuan">
+<meta property="og:description" content="无论是学习webpack还是nodejs，都会发现文件一律被视为模块，而在不同模块间传递数据都会用到module.exports、exports导出模块，require来加载其他模块，这里主要就是介绍下他们所属的CommmonJS规范。">
+<meta property="og:image" content="http://yoursite.com/2017/06/07/CommonJS规范/exports变量用法.png">
+<meta property="og:updated_time" content="2017-06-07T03:10:53.152Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CommonJS规范">
+<meta name="twitter:description" content="无论是学习webpack还是nodejs，都会发现文件一律被视为模块，而在不同模块间传递数据都会用到module.exports、exports导出模块，require来加载其他模块，这里主要就是介绍下他们所属的CommmonJS规范。">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/07/CommonJS规范/exports变量用法.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/07/CommonJS规范/"/>
+
+
+
+
+
+  <title> CommonJS规范 | Xuan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活、技术个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/CommonJS规范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Xuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CommonJS规范
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-07T10:48:42+08:00">
+                2017-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>无论是学习webpack还是nodejs，都会发现文件一律被视为模块，而在不同模块间传递数据都会用到module.exports、exports导出模块，require来加载其他模块，这里主要就是介绍下他们所属的CommmonJS规范。</p>
+<a id="more"></a>
+<h2 id="CommonJS规范"><a href="#CommonJS规范" class="headerlink" title="CommonJS规范"></a>CommonJS规范</h2><p>一般大一点的程序都需要将代码模块化，而 JS没有模块系统、缺乏包管理工具。目前提供模块加载的方案主要有两种：CommonJS和AMD。<strong>前者适用于服务器端，后者用于浏览器端</strong>。原因：</p>
+<p><em>CommonJS加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD规范则是非同步加载模块，允许指定回调函数。由于Node.js主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以CommonJS规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，必须采用非同步模式，因此浏览器端一般采用AMD规范</em></p>
+<p>这里，我们主要介绍CommonJS规范，该规范中，每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。</p>
+<p>在每个模块内部，<code>module</code>对象代表了当前模块。每个模块的<code>module</code>对象都是在Node内部提供的<code>Module</code>构建函数的实例对象，该对象的属性包括：</p>
+<ul>
+<li><p><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</p>
+</li>
+<li><p><code>module.filename</code> 模块的文件名，带有绝对路径。</p>
+</li>
+<li><p><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</p>
+</li>
+<li><p><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</p>
+</li>
+<li><p><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。</p>
+</li>
+<li><p><code>module.exports</code> 表示模块对外输出的值。</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="module-exports属性"><a href="#module-exports属性" class="headerlink" title="module.exports属性"></a>module.exports属性</h2><p>该属性表示当前模块对外输出的接口，其他模块用require函数引入得到的就是当前模块的module.exports。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//example1.js</span></div><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> aa  = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span>  x + value;</div><div class="line">&#125;</div><div class="line"><span class="built_in">module</span>.exports.x = x;</div><div class="line"><span class="built_in">module</span>.exports.aa = aa;</div></pre></td></tr></table></figure>
+<p>上面通过module.exports导出了该模块中的变量x和函数aa，下面通过require加载模块。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//example2.js</span></div><div class="line"><span class="keyword">var</span> example = <span class="built_in">require</span>(<span class="string">'./example1.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(example.x);       <span class="comment">//1</span></div><div class="line"><span class="built_in">console</span>.log(example.aa(<span class="number">2</span>));   <span class="comment">//3</span></div></pre></td></tr></table></figure>
+<h2 id="exports变量"><a href="#exports变量" class="headerlink" title="exports变量"></a>exports变量</h2><p>具体先看一下它的使用方法：在文件name.js中写入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"我是用var声明的变量"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayName</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"我是用function声明的函数"</span>);</div><div class="line">&#125;</div><div class="line">exports.name = <span class="string">"我是exports下的一个属性"</span>;</div><div class="line">exports.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">"我是exports下的一个方法"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在另一个test.js文件中，这样引入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> test = <span class="built_in">require</span>(<span class="string">'./name.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(test);</div><div class="line"><span class="built_in">console</span>.log(test.name);     </div><div class="line">test.sayName();</div></pre></td></tr></table></figure>
+<p>执行test.js后，输出的结果如下图</p>
+<p><img src="/2017/06/07/CommonJS规范/exports变量用法.png" alt="exports变量用法"></p>
+<p>可以看出，任何exports属性和方法可以在外部访问，而用var和function定义的变量和方法都是私有的，外部访问不到，需要通过exports暴露出去才能访问到。</p>
+<h3 id="exports和module-exports的区别"><a href="#exports和module-exports的区别" class="headerlink" title="exports和module.exports的区别"></a>exports和module.exports的区别</h3><p><strong>exports </strong>和<strong>module.exports</strong>都是对外提供的接口，不过也有区别。</p>
+<p>exports只是module.exports的辅助方法，<strong>你的模块最终返回module.exports给调用者，而不是exports</strong>。exports所做的事情是收集属性，如果module.exports当前没有任何属性的话，exports会把这些属性赋予module.exports。如果module.exports已经存在一些属性的话，那么exports中所用的东西都会被忽略。</p>
+<p>看例子：</p>
+<p>name.js文件中写入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="string">'导出的数据'</span>;   <span class="comment">//这里对module.exports进行了赋值</span></div><div class="line">exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;         <span class="comment">//又对exports赋予了方法</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is wu'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>test.js中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> test = <span class="built_in">require</span>(<span class="string">'./name.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(test);    <span class="comment">//'导出的数据'</span></div><div class="line">test.name();    <span class="comment">//TypeError: Object 导出的数据 has no method 'name'</span></div></pre></td></tr></table></figure>
+<p> 通过该例子，你会发现name.js模块完全忽略了exports.name，然后返回了一个字符串’导出的数据’。其实你的模块可以是任何你赋予module.exports的值，可以是任何合法的JavaScript对象 - boolean，number，date，JSON， string，function，array和其他。如果你没有明确的给module.exports设置任何值，那么exports中的属性会被赋给module.exports中，然后并返回它。</p>
+<h2 id="require命令的用法"><a href="#require命令的用法" class="headerlink" title="require命令的用法"></a>require命令的用法</h2><p><code>require</code>命令用于在当前模块中加载其他模块（读入并执行一个JS文件），并返回当前模块的exports对象，对外提供接口。</p>
+<p><code>require</code>函数传入的模块名有几种写法：</p>
+<ul>
+<li><p>传递给<code>require</code>函数的若是Nodejs内置模块名称，则不做路径解析，直接返回内部模块的导出对象，如<code>require(&#39;fs&#39;)</code>；</p>
+</li>
+<li><p>以<code>./</code>开头，表示要加载模块的相对路径；</p>
+</li>
+<li><p>以<code>/</code>开头，表示要加载模块的绝对路径；</p>
+</li>
+<li><p>如果不以<code>./</code>或<code>/</code>开头，如<code>require(&#39;example/path/to/file&#39;)</code>参数是一个路径，则将先找到<code>example-module</code>的位置，然后再以它为参数，找到后续路径。</p>
+</li>
+<li><p>Node.js定义了一个特殊的目录<code>node_modules</code>来存放模块，如当前模块的绝对路径为<code>/home/user/projects/foo.js</code>，在模块中通过<code>requuire(&#39;bar&#39;)</code>加载模块时，系统会尝试搜索位于各级node_modules目录的已安装模块，具体搜寻以下路径：</p>
+<p>1./home/user/projects/node_modules/bar.js</p>
+<p>2./home/user/node_modules/bar.js</p>
+<p>3./home/node_modules/bar.js</p>
+<p>4./node_modules/bar.js</p>
+</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/module.html#toc1" target="_blank" rel="external">CommonJS规范</a></p>
+<p><a href="http://nqdeng.github.io/7-days-nodejs/#1.5.2" target="_blank" rel="external">七天学会NodeJS</a></p>
+<p><a href="http://jingyan.baidu.com/article/a17d5285185bfb8098c8f204.html" target="_blank" rel="external">exports和module.exports的用法与区别NodeJS</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CommonJS规范，JavaScript/" rel="tag"># CommonJS规范，JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/18/搭个自己的窝啦/" rel="next" title="搭个自己的窝啦">
+                <i class="fa fa-chevron-left"></i> 搭个自己的窝啦
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Wu Xuan" />
+          <p class="site-author-name" itemprop="name">Wu Xuan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS规范"><span class="nav-number">1.</span> <span class="nav-text">CommonJS规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#module-exports属性"><span class="nav-number">2.</span> <span class="nav-text">module.exports属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exports变量"><span class="nav-number">3.</span> <span class="nav-text">exports变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exports和module-exports的区别"><span class="nav-number">3.1.</span> <span class="nav-text">exports和module.exports的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#require命令的用法"><span class="nav-number">4.</span> <span class="nav-text">require命令的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Xuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
