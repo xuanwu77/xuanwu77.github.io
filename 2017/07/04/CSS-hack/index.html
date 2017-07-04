@@ -1,0 +1,694 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是CSS hack？不同的浏览器对某些CSS代码解析会存在一定的差异，因此会导致不同浏览器下给用户展示的页面效果不一样，碰到这样的情况就需要开发人员通过针对不同的浏览器对应写出不同的CSS代码，这种技术有个专门的名称就是CSS Hack。">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS hack">
+<meta property="og:url" content="http://yoursite.com/2017/07/04/CSS-hack/index.html">
+<meta property="og:site_name" content="Xuan">
+<meta property="og:description" content="什么是CSS hack？不同的浏览器对某些CSS代码解析会存在一定的差异，因此会导致不同浏览器下给用户展示的页面效果不一样，碰到这样的情况就需要开发人员通过针对不同的浏览器对应写出不同的CSS代码，这种技术有个专门的名称就是CSS Hack。">
+<meta property="og:image" content="http://yoursite.com/2017/07/04/CSS-hack/浏览器识别字符标准对应表.png">
+<meta property="og:updated_time" content="2017-07-04T01:06:11.803Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS hack">
+<meta name="twitter:description" content="什么是CSS hack？不同的浏览器对某些CSS代码解析会存在一定的差异，因此会导致不同浏览器下给用户展示的页面效果不一样，碰到这样的情况就需要开发人员通过针对不同的浏览器对应写出不同的CSS代码，这种技术有个专门的名称就是CSS Hack。">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/04/CSS-hack/浏览器识别字符标准对应表.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/04/CSS-hack/"/>
+
+
+
+
+
+  <title> CSS hack | Xuan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活、技术个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/04/CSS-hack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Xuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CSS hack
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-04T08:48:21+08:00">
+                2017-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是CSS-hack？"><a href="#什么是CSS-hack？" class="headerlink" title="什么是CSS hack？"></a>什么是CSS hack？</h2><p>不同的浏览器对某些CSS代码解析会存在一定的差异，因此会导致不同浏览器下给用户展示的页面效果不一样，碰到这样的情况就需要开发人员通过针对不同的浏览器对应写出不同的CSS代码，这种技术有个专门的名称就是CSS Hack。  </p>
+<a id="more"></a>
+<p><strong>对于前端开发人员来说，应当尽可能地不使用CSS的hack技术来实现需求，说是不太友好，那咱么就听他的，少用。不过某些情况下，为了顾及用户体验实现向下兼容，不得已需要使用hack。所以这篇文章呢，就来总结下CSS hack的一些用法</strong>。  </p>
+<h2 id="CSS-hack的分类"><a href="#CSS-hack的分类" class="headerlink" title="CSS hack的分类"></a>CSS hack的分类</h2><p>CSS Hack有三种实现方式，它们分别是：</p>
+<ul>
+<li>HTML头部的hack(条件注释法)</li>
+<li>CSS类内部的hack(类内属性前缀法)</li>
+<li>CSS选择器的hack(选择器前缀法)</li>
+</ul>
+<h3 id="HTML头部的hack-条件注释法"><a href="#HTML头部的hack-条件注释法" class="headerlink" title="HTML头部的hack(条件注释法)"></a>HTML头部的hack(条件注释法)</h3><p>IE浏览器的CSS样式显示不仅区别于其他主流浏览器，同时IE的各版本之间也具有差异性。那么现在要讲的这种方法，主要是针对IE浏览器，而会被非IE的浏览器所忽略。下面举几个例子:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--[if IE]&gt;</span></div><div class="line">这段文字只在IE浏览器显示</div><div class="line">&lt;![endif]--&gt;</div><div class="line">	</div><div class="line">	</div><div class="line"><span class="comment">&lt;!--[if IE 6]&gt;</span></div><div class="line">这段文字只在IE6浏览器显示</div><div class="line">&lt;![endif]--&gt;</div><div class="line"></div><div class="line">	</div><div class="line"><span class="comment">&lt;!--[if gte IE 6]&gt;</span></div><div class="line">这段文字只在IE6以上(包括)版本IE浏览器显示，gte是greater than or equal to的简写，意思是大于等于。</div><div class="line">&lt;![endif]--&gt;</div><div class="line">	</div><div class="line">	</div><div class="line"><span class="comment">&lt;!--[if lt IE 8]&gt; </span></div><div class="line">这段文字只在比8低的IE浏览器显示</div><div class="line">&lt;![endif]--&gt;</div></pre></td></tr></table></figure>
+<h3 id="CSS类内部的hack-类内属性前缀法"><a href="#CSS类内部的hack-类内属性前缀法" class="headerlink" title="CSS类内部的hack(类内属性前缀法)"></a>CSS类内部的hack(类内属性前缀法)</h3><p>这种方法是在CSS样式属性名前加上一些只有特定浏览器才能识别的前缀，或是在属性值后加上特定后缀，来区分各浏览器的页面展示效果。 </p>
+<p>简单来说，IE6能识别下划“_“和星号“*“ ，IE7能识别星号但不能识别下划线“ _ “,IE6~IE10都认识&quot; \9 &quot;，但firefox等对前述三个都不能识别。<br>以IE6和IE7为例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">div&#123;</div><div class="line">    *background:green; /* IE7 */</div><div class="line">    _background:yellow;/* IE6 */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上写法可以区分背景色在IE6和IE7上的显示效果，很明显，IE7中显示为绿色，而IE6中显示为黄色。  </p>
+<p>如果我们改动一下，颠倒他俩的位置，那么无论是IE6还是IE7都会显示绿色。原因是CSS优先级的问题，对于同级别的CSS样式，最后面的样式会覆盖前面的样式。</p>
+<p>而对于涉及到多个浏览器：IE，Chrome，FireFox，Safari以及Opera的情况，需要根据不同的字符来识别 ，网络上也有许多参考表格，不过，都有些许差异。这里给出一个参考:</p>
+<p><img src="/2017/07/04/CSS-hack/浏览器识别字符标准对应表.png" alt="浏览器识别字符标准对应表"></p>
+<h3 id="CSS选择器的hack-选择器前缀法"><a href="#CSS选择器的hack-选择器前缀法" class="headerlink" title="CSS选择器的hack(选择器前缀法)"></a>CSS选择器的hack(选择器前缀法)</h3><p>它是指在CSS选择器前面加上只有某种浏览器自己可以识别的特殊字符串来进行hack。例如：IE6能识别*html .class{}，IE7能识别*+html .class{}。 </p>
+<p>常见的还有以下几种：(摘自其他博文，参考给出的链接)</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">*html       *前缀只对IE6生效</div><div class="line">*+html      *+前缀只对IE7生效</div><div class="line">@media screen\9&#123;...&#125;     只对IE6/7生效</div><div class="line">@media \0screen &#123;body &#123; background: red; &#125;&#125;   只对IE8有效</div><div class="line">@media \0screen\,screen\9&#123;body &#123; background: blue; &#125;&#125; 只对IE6/7/8有效                                         </div><div class="line">@media screen\0 &#123;body &#123; background: green; &#125;&#125;     只对IE8/9/10有效  </div><div class="line">@media screen and (min-width:0\0) &#123;body &#123; background: gray; &#125;&#125;  只对IE9/10有效                                                     </div><div class="line">@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) &#123;body &#123; background: orange; &#125;&#125;     只对IE10有效</div></pre></td></tr></table></figure>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>其实CSS  hack并没有什么原理可言，没有很难的内部逻辑需要理解，只是需要我们平时多留心，使用的过程中注意积累。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://blog.csdn.net/freshlover/article/details/12132801" target="_blank" rel="external">史上最全的CSS hack方式一览</a>  </p>
+<p><a href="http://www.kwstu.com/Admin/ViewArticle/201409011604277330" target="_blank" rel="external">CSS hack</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/07/CommonJS规范/" rel="next" title="CommonJS规范">
+                <i class="fa fa-chevron-left"></i> CommonJS规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Wu Xuan" />
+          <p class="site-author-name" itemprop="name">Wu Xuan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是CSS-hack？"><span class="nav-number">1.</span> <span class="nav-text">什么是CSS hack？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-hack的分类"><span class="nav-number">2.</span> <span class="nav-text">CSS hack的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML头部的hack-条件注释法"><span class="nav-number">2.1.</span> <span class="nav-text">HTML头部的hack(条件注释法)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS类内部的hack-类内属性前缀法"><span class="nav-number">2.2.</span> <span class="nav-text">CSS类内部的hack(类内属性前缀法)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS选择器的hack-选择器前缀法"><span class="nav-number">2.3.</span> <span class="nav-text">CSS选择器的hack(选择器前缀法)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">3.</span> <span class="nav-text">写在最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Xuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
