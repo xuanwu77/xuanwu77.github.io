@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/07/Web前端安全问题/index.html">
 <meta property="og:site_name" content="Xuan">
 <meta property="og:description" content="一个Web项目的安全问题是很重要的，如果你开发的程序有安全漏洞，小则影响一个公司的内部系统，大则影响到互联网下的大量用户的安全与隐私。 web的安全问题对许多学习前端开发的人来说，都有种谈虎色变的感觉，总觉着安全问题应该是由后端来解决的。反正啊，我以前在不了解的时候也是这样想的。那其实了解之后呢，才会发现安全问题是渗透在整个web项目的开发中的，无论是在前端还是在后端都会要关注安全问题，但各自又分">
-<meta property="og:updated_time" content="2017-07-07T11:44:23.036Z">
+<meta property="og:updated_time" content="2017-07-07T11:56:54.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web前端安全问题">
 <meta name="twitter:description" content="一个Web项目的安全问题是很重要的，如果你开发的程序有安全漏洞，小则影响一个公司的内部系统，大则影响到互联网下的大量用户的安全与隐私。 web的安全问题对许多学习前端开发的人来说，都有种谈虎色变的感觉，总觉着安全问题应该是由后端来解决的。反正啊，我以前在不了解的时候也是这样想的。那其实了解之后呢，才会发现安全问题是渗透在整个web项目的开发中的，无论是在前端还是在后端都会要关注安全问题，但各自又分">
@@ -327,7 +327,7 @@
 <a id="more"></a>
 <p><strong>比如，前端更注重的安全问题有：XSS、CSRF（这两个经常被拿来做比较）；</strong></p>
 <p><strong>后端的有：SQL注入、用户密码安全等；</strong></p>
-<p><strong>在前后端传输过程中要注意的有：HTTP窃听、HTTPS、数据加密传输等；</strong></p>
+<p><strong>在前后端传输过程中要注意的有：HTTP窃听、HTTPS、数据加密传输等。</strong></p>
 <p>由于本人是做前端开发的，所以以下所要讲的主要是针对前端开发中需要注意的XSS和CSRF，以及对应的防御方法，也希望把自己看的一些文章做个总结和梳理。</p>
 <h3 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h3><p>跨站脚本攻击XSS，英文全称Cross Site Scripting，很明显，按理说应该简写为CSS嘛，不过你也知道CSS广为人知的含义是层叠样式表，所以啊，为避免混淆，就被简写为了XSS.</p>
 <p>OWASP（一个组织）给出的XSS漏洞定义如下：</p>
@@ -337,7 +337,7 @@
 <p>简单用个例子告诉大家它干了什么！</p>
 <p>比如在一个卖商品的网站上有个可以让你快速搜索到你想要东西的搜索框，我们在里面输入:</p>
 <p><code>&lt;script&gt;alert(&#39;攻击窗口&#39;)&lt;/script&gt;</code></p>
-<p>一般来说，网站没有搜到该商品时，会在页面上显示出你提交时的名称，这里如果没有对输入信息进行过滤或转义的话，会在页面上显示“找不到<script>alert(‘攻击窗口’)</script>”这类反馈信息，其中包含了我们刚刚输入的原样信息。结果呢，这时会发现页面上弹出了“攻击窗口”这个窗口。</p>
+<p>一般来说，网站没有搜到该商品时，会在页面上显示出你提交时的名称，这里如果没有对输入信息进行过滤或转义的话，会在页面上显示“找不到&lt;script &gt;alert(‘攻击窗口’)&lt;script&gt;”这类反馈信息，其中包含了我们刚刚输入的原样信息。结果呢，这时会发现页面上弹出了“攻击窗口”这个窗口。</p>
 <p>同样的道理，我们可以在评论区中发表内容，里面也包含一些不安全的脚本代码，只要前后端有这个漏洞，这些 恶意代码都能被其它浏览该评论的用户端执行。</p>
 <p>所以通过上面的描述，大致能够解释下XSS：</p>
 <p>攻击的入手处往往是网站中涉及到站内交互的地方，比如说可以发表评论的地方，攻击者可以在要发布的内容中嵌入一些恶意的javascript代码，而这段内容发送给服务器端后又没有经过过滤或者转义，之后被作为普通文本内容返回到了用户浏览的页面上，当用户访问这个页面时就会运行这些恶意脚本，从而达到攻击用户的效果。</p>
@@ -346,7 +346,7 @@
 <p>比如利用</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> escapeHtml = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>) </span>&#123; </div><div class="line">  	<span class="keyword">if</span>(!str) <span class="keyword">return</span> <span class="string">''</span>; </div><div class="line">	str = str.replace(<span class="regexp">/&amp;/g</span>, <span class="string">'&amp;amp;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&amp;lt;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/&gt;/g</span>, <span class="string">'&amp;gt;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/"/g</span>, <span class="string">'&amp;quto;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/'/g</span>, <span class="string">'&amp;#39;'</span>); </div><div class="line">  	<span class="keyword">return</span> str;</div><div class="line">&#125;</div><div class="line"> <span class="keyword">var</span> input = escapeHtml(<span class="string">`&lt;script&gt;alert('攻击窗口')&lt;/script&gt;`</span>);</div><div class="line">作者： TooooBug </div><div class="line">链接：http:<span class="comment">//www.imooc.com/article/18069</span></div></pre></td></tr></table></figure>
 <p>这时，输入的内容就变成了:</p>
-<p><code>&amp;lt;script&amp;gt;alert(&amp;#39;SB&amp;#39;)&amp;lt;/script&amp;gt;</code>，这样它就不会被理解成js代码了。</p>
+<p><code>&amp;lt;script&amp;gt;alert(&amp;#39;攻击窗口&amp;#39;)&amp;lt;/script&amp;gt;</code>，这样它就不会被理解成js代码了。</p>
 <p>当然，有时候不一定全部的字符都需要过滤和转义，要视具体情况来决定哪些需要、哪些不需要。</p>
 <p>另外，我们虽然知道了需要对<code>&lt;script&gt;</code>、<code>&lt;iframe&gt;</code>这些特殊的标签要格外警惕，但同时要注意一下，不只是script标签是可以运行脚本的，任何的html标签都可以加上类似onclick，onload这样的事件也都可以运行脚本，因此JS事件的名称也需要过滤。</p>
 <p><strong>2.CSP方法</strong></p>
@@ -407,6 +407,8 @@
 <p><a href="https://segmentfault.com/a/1190000007059639" target="_blank" rel="external">用大白话谈谈XSS与CSRF</a></p>
 <p><a href="http://www.cnblogs.com/doit8791/p/5926575.html" target="_blank" rel="external">Web安全之Cookie劫持</a></p>
 <p><a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/09.1.md" target="_blank" rel="external">预防CSRF攻击</a></p>
+<p><a href="http://www.jianshu.com/p/d928fba78cda" target="_blank" rel="external">前端必备HTTP技能之跨站请求伪造(CSRF)技术详解</a></p>
+<p><a href="http://www.jianshu.com/p/19da8851e985" target="_blank" rel="external">程序猿必读-防范CSRF跨站请求伪造</a></p>
 
       
     </div>
