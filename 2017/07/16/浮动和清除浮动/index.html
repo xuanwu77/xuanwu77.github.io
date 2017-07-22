@@ -1,0 +1,771 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS,浮动,清除浮动," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="如何理解元素的浮动以及如何清除浮动的问题，其实已经是老生常谈的问题了，不过，在我这，还是要再讲一遍！为什么？因为，就算是出现频率这么高的问题，在面试的时候依然能被问住！所以，我想好好地总结一番。">
+<meta name="keywords" content="CSS,浮动,清除浮动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浮动和清除浮动">
+<meta property="og:url" content="http://yoursite.com/2017/07/16/浮动和清除浮动/index.html">
+<meta property="og:site_name" content="Xuan">
+<meta property="og:description" content="如何理解元素的浮动以及如何清除浮动的问题，其实已经是老生常谈的问题了，不过，在我这，还是要再讲一遍！为什么？因为，就算是出现频率这么高的问题，在面试的时候依然能被问住！所以，我想好好地总结一番。">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/脱离文档流.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/内联排列.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/高度塌陷1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/清除浮动的例子1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/清除浮动的例子2.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/高度塌陷1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/使用空标签清除浮动.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/清除浮动例子3.png">
+<meta property="og:updated_time" content="2017-07-22T09:30:45.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浮动和清除浮动">
+<meta name="twitter:description" content="如何理解元素的浮动以及如何清除浮动的问题，其实已经是老生常谈的问题了，不过，在我这，还是要再讲一遍！为什么？因为，就算是出现频率这么高的问题，在面试的时候依然能被问住！所以，我想好好地总结一番。">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/16/浮动和清除浮动/脱离文档流.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/16/浮动和清除浮动/"/>
+
+
+
+
+
+  <title> 浮动和清除浮动 | Xuan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活、技术个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/16/浮动和清除浮动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Xuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浮动和清除浮动
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T11:58:25+08:00">
+                2017-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如何理解元素的浮动以及如何清除浮动的问题，其实已经是老生常谈的问题了，不过，在我这，还是要再讲一遍！为什么？因为，就算是出现频率这么高的问题，在面试的时候依然能被问住！所以，我想好好地总结一番。</p>
+<a id="more"></a>
+<h3 id="浮动及浮动的特征"><a href="#浮动及浮动的特征" class="headerlink" title="浮动及浮动的特征"></a>浮动及浮动的特征</h3><p>一句话介绍浮动：<strong>浮动元素会脱离文档流并向左/向右浮动，直到碰到父元素或者另一个浮动元素。</strong> </p>
+<p>下面会通过详细介绍浮动的特征来带大家全面理解浮动！</p>
+<h4 id="浮动的特征"><a href="#浮动的特征" class="headerlink" title="浮动的特征"></a>浮动的特征</h4><p><strong>1.脱离文档流</strong></p>
+<p>这里的文档流，其实在W3C标准中，被叫做<strong>普通流</strong>（normal flow），但是国内翻译里出现的都是文档流，久而久之就用文档流的说法了。</p>
+<p><img src="/2017/07/16/浮动和清除浮动/脱离文档流.png" alt="脱离文档流"></p>
+<p>看上面这个图，以3个div的布局为例。由于div是块状元素，需要独占一行，所以在3个div都不浮动的情况下，应该如左图那样从上至下排列。而右图里，div1左浮动，div2右浮动，所以显示在图里的左上角和右上角，此外他俩脱离了文档流，所以他们后面的元素就自然往上移动，出现了图中绿色div1覆盖了部分蓝色div2面积的情况。</p>
+<p>好了，这个大家若懂了，再<strong>思考个问题</strong>：</p>
+<p>浮动元素都脱离文档流了，不是覆盖了下方的元素了吗，“div3”这几个字不应该也是被覆盖了吗，为何这里还是出现了，而且还环绕着div1呢？</p>
+<p>这边就要再穿插个小知识点，《精通CSS》这本书中提到：</p>
+<blockquote>
+<p>浮动会让元素脱离文档流，不再影响不浮动的元素。实际上，并不完全如此。如果浮动的元素后面有一个文档流中的元素，那么<strong>这个元素的框会表现得像浮动根本不存在一样</strong>。但是，<strong>框的文本内容会受到浮动元素的影响</strong>，会移动以留出空间。</p>
+</blockquote>
+<p>所以呢，其实这个就是float独有的一个作用，能够<strong>实现文本环绕图片的效果。</strong></p>
+<p><strong>2.浮动可以实现内联排列</strong></p>
+<p>浮动会向左/向右浮动，直到碰到另一个浮动元素为止，这是浮动可以内联排列的特征。也就是说，浮动可以设置宽高，并且能够一行多个。</p>
+<p><img src="/2017/07/16/浮动和清除浮动/内联排列.png" alt="内联排列"></p>
+<p><strong>3.浮动会导致父元素高度塌陷</strong></p>
+<p><em>什么是高度塌陷？</em></p>
+<p>当没有指定高度的父元素中的子元素全部都浮动时，父元素中内部高度因为是普通流中的块元素撑起来的，所以这个时候父元素的高度会变成0或者会有部分浮动元素的位置会超出父元素的高度之外，这种现象叫做高度坍塌。给出代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>高度塌陷<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">        <span class="comment">/* box-wrapper不设置高度 */</span></div><div class="line">		<span class="selector-class">.box-wrapper</span> &#123;</div><div class="line">			<span class="attribute">border</span>: <span class="number">10px</span> solid orange;</div><div class="line">		    <span class="attribute">width</span>: <span class="number">600px</span>;  </div><div class="line">		&#125;</div><div class="line">		<span class="selector-class">.box-wrapper</span> <span class="selector-class">.box</span> &#123;</div><div class="line">            <span class="attribute">float</span>: left; </div><div class="line">            <span class="attribute">width</span>: <span class="number">100px</span>; </div><div class="line">            <span class="attribute">height</span>: <span class="number">100px</span>; </div><div class="line">            <span class="attribute">margin</span>: <span class="number">30px</span>; </div><div class="line">            <span class="attribute">background-color</span>: blue;</div><div class="line">		&#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box-wrapper"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>效果如图所示：</p>
+<p><img src="/2017/07/16/浮动和清除浮动/高度塌陷1.png" alt="内联排列"></p>
+<p>解释一下，三个div由于浮动脱离了文档流，而外层的div又没有设置定高，内部没有东西可以撑开，所以它的width就变为0了，只能上下两个边框合并在一起了。此外，3个box的margin-top为30px，依然是离box-wrapper的上边框距离为30px，并不是离合并后的边框为30px，图中已经标出来了。</p>
+<h3 id="浮动会引起的问题"><a href="#浮动会引起的问题" class="headerlink" title="浮动会引起的问题"></a>浮动会引起的问题</h3><p>问题主要有几个：</p>
+<p>1.父元素高度塌陷，影响与父元素同级的元素。</p>
+<p>2.下方非文本元素与浮动元素重合，破坏了原本布局。</p>
+<p>针对浮动带来的影响，我们需要清除浮动，以下将介绍清除浮动和几种解决方法：</p>
+<h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><ul>
+<li><strong>1.清除浮动并不是让浮动元素回到文档流</strong></li>
+<li><strong>2.清除浮动只会改变该元素自身的位置，并且只针对排在该元素前面的元素，目的是让自己的左边或者右边没有浮动元素。</strong></li>
+</ul>
+<p>清除浮动的关键字是clear，是css属性，取值如下：</p>
+<p>clear : none | left | right | both</p>
+<ul>
+<li>none : 默认值。允许两边都可以有浮动对象</li>
+<li>left : 不允许左边有浮动对象</li>
+<li>right : 不允许右边有浮动对象</li>
+<li>both : 左右两侧均不允许有浮动对象</li>
+</ul>
+<p>好，有了官方的说明，我们来学习如何使用！</p>
+<p>我们先关注3个浮动元素清除浮动的效果，不先关注父元素的高度是否塌陷！</p>
+<p>以该图为例</p>
+<p><img src="/2017/07/16/浮动和清除浮动/清除浮动的例子1.png" alt="内联排列"></p>
+<p>例子2：为div2清除左浮动，即clear:left后，</p>
+<p><img src="/2017/07/16/浮动和清除浮动/清除浮动的例子2.png" alt="内联排列"></p>
+<p>你大概知道了clear的用法，现在考虑父元素没有设置高度的情况，刚才讲浮动特性时，讲了高度塌陷的原理，这里再次引入刚才的图：</p>
+<p><img src="/2017/07/16/浮动和清除浮动/高度塌陷1.png" alt="内联排列"></p>
+<p>我们如何用clear的方法解决父元素无法被撑开的问题呢？</p>
+<h4 id="使用带有clear属性的空元素"><a href="#使用带有clear属性的空元素" class="headerlink" title="使用带有clear属性的空元素"></a>使用带有clear属性的空元素</h4><p>clear属性不允许被清除浮动的元素的左边/右边挨着浮动元素，底层原理是在被清除浮动的元素上边或者下边添加足够的清除空间。<br><strong>要注意了，我们是通过在别的元素上清除浮动来实现撑开高度的， 而不是在浮动元素上。</strong>下面来体会一下这句话的含义！</p>
+<p><strong>正面例子：</strong></p>
+<p>在外层父元素div的末尾添加一个额外空元素，并利用此元素清除浮动。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box-wrapper"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> &gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"clear:both;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>//添加了空标签，清除左右浮动</div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>效果如下，父元素被撑开了。</p>
+<p><img src="/2017/07/16/浮动和清除浮动/使用空标签清除浮动.png" alt="内联排列"></p>
+<p>要注意了，我们是通过在别的元素上清除浮动来实现撑开高度的， 而不是在浮动元素上，如果说我们给第三个div添加clear:both的样式会怎样呢？</p>
+<p><strong>反面例子：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box-wrapper"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">style</span>=<span class="string">"clear:both;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> //注意这里</div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="/2017/07/16/浮动和清除浮动/清除浮动例子3.png" alt="内联排列"></p>
+<p>给浮动元素添加clear属性，可能会改变它的位置，但它依然是浮动元素脱离文档流，而无法撑开父容器。</p>
+<p>看到这，你应该已经知道了第一种清除浮动防止父元素高度塌陷的方法和实现原理，就是在父容器的最后添加一个子元素设置其clear:both;。现在趁热打铁，来讲一下利用了第一种方法的原理的第二种方法，也就是使用<strong>after伪元素</strong>！</p>
+<h4 id="使用CSS的-after伪元素"><a href="#使用CSS的-after伪元素" class="headerlink" title="使用CSS的:after伪元素"></a>使用CSS的:after伪元素</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">    <span class="comment">/* box-wrapper不设置高度 */</span></div><div class="line">    <span class="selector-class">.box-wrapper</span> &#123;</div><div class="line">        <span class="attribute">border</span>: <span class="number">10px</span> solid orange;</div><div class="line">        <span class="attribute">width</span>: <span class="number">500px</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/* 使用:after伪元素*/</span></div><div class="line">    <span class="selector-class">.box-wrapper</span><span class="selector-pseudo">:after</span>&#123;</div><div class="line">        <span class="attribute">content</span>: <span class="string">'.'</span>;</div><div class="line">        <span class="attribute">display</span>: block;</div><div class="line">        <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">        <span class="attribute">visibility</span>: hidden;</div><div class="line">        <span class="attribute">clear</span>: both;</div><div class="line">    &#125;</div><div class="line">    <span class="selector-class">.box-wrapper</span> <span class="selector-class">.box</span> &#123;</div><div class="line">        <span class="attribute">float</span>: left; </div><div class="line">        <span class="attribute">width</span>: <span class="number">100px</span>; </div><div class="line">        <span class="attribute">height</span>: <span class="number">100px</span>; </div><div class="line">        <span class="attribute">margin</span>: <span class="number">30px</span>; </div><div class="line">        <span class="attribute">background-color</span>: blue;</div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">================================================================</div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box-wrapper"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这是目前比较推荐的方法，不会引入无意义的html标签，而是通过:after伪元素在父容器的内部元素最后添加了一个看不见的空格“/20”或点“.” ，并且赋予clear属性来清除浮动，其原理同第一方法。为了兼容IE6和IE7浏览器，要给box-wrapper这个class添加一条zoom:1;触发haslayout（你可以把它写到IE6、7的CSS hacker文件里）。</p>
+<h4 id="给父容器添加overflow属性"><a href="#给父容器添加overflow属性" class="headerlink" title="给父容器添加overflow属性"></a>给父容器添加overflow属性</h4><p>给包含浮动元素的父元素添加overflow:hidden（或overflow:auto;）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box-wrapper</span> &#123;</div><div class="line">    <span class="attribute">overflow</span>: hidden;</div><div class="line">    <span class="attribute">border</span>: <span class="number">10px</span> solid orange;</div><div class="line">    <span class="attribute">width</span>: <span class="number">500px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法目前还是挺常用的，但建议在局部和无法添加class的地方使用该方法清除浮动，但是不要作为主要清理浮动方式。</p>
+<h4 id="让父容器也浮动"><a href="#让父容器也浮动" class="headerlink" title="让父容器也浮动"></a>让父容器也浮动</h4><p>给浮动元素的容器也添加上浮动属性即可清理内部浮动，这种就比较简单，但是，由于父容器和子元素都浮动脱离文档流了，必然会影响紧跟在其后面的元素。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">title</span>&gt;</span>让父容器也浮动<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">      <span class="selector-class">.box-wrapper</span> &#123;</div><div class="line">        <span class="comment">/* 父容器也左浮动 */</span></div><div class="line">          <span class="attribute">float</span>: left;  </div><div class="line">          <span class="attribute">border</span>: <span class="number">10px</span> solid orange;</div><div class="line">          <span class="attribute">width</span>: <span class="number">500px</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="selector-class">.box-wrapper</span> <span class="selector-class">.box</span> &#123;</div><div class="line">          <span class="attribute">float</span>: left; </div><div class="line">          <span class="attribute">width</span>: <span class="number">100px</span>; </div><div class="line">          <span class="attribute">height</span>: <span class="number">100px</span>; </div><div class="line">          <span class="attribute">margin</span>: <span class="number">30px</span>; </div><div class="line">          <span class="attribute">background-color</span>: blue;</div><div class="line">      &#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box-wrapper"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1.一句话介绍浮动：<strong>浮动元素会脱离文档流并向左/向右浮动，直到碰到父元素或者另一个浮动元素。</strong></p>
+<p>2.浮动的特征：</p>
+<ul>
+<li>脱离文档流</li>
+<li>实现内联排列</li>
+<li>会导致父元素高度塌陷</li>
+</ul>
+<p>3.清除浮动（只列出常用的四种，还有更多方法请参考其他文章）</p>
+<ul>
+<li>使用带有clear属性的空元素</li>
+<li>使用CSS的:after伪元素</li>
+<li>给父容器添加overflow属性</li>
+<li>让父容器也浮动</li>
+</ul>
+<h3 id="附加一个问题：如何让浮动元素实现水平居中？"><a href="#附加一个问题：如何让浮动元素实现水平居中？" class="headerlink" title="附加一个问题：如何让浮动元素实现水平居中？"></a>附加一个问题：如何让浮动元素实现水平居中？</h3><p>首先，我们知道，对于一个定宽的非浮动元素，我们可以通过设置<code>margin:0 auto ;</code>来实现水平居中，而对于不定宽的浮动元素我们也有一个常用的技巧解决它的水平居中问题。代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">title</span>&gt;</span>浮动元素居中<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">      <span class="selector-class">.box</span>&#123;</div><div class="line">          <span class="attribute">float</span>:left;</div><div class="line">          <span class="attribute">position</span>:relative;</div><div class="line">          <span class="attribute">left</span>:<span class="number">50%</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="selector-tag">p</span>&#123;</div><div class="line">          <span class="attribute">float</span>:left;</div><div class="line">          <span class="attribute">position</span>:relative;</div><div class="line">          <span class="attribute">right</span>:<span class="number">50%</span>;</div><div class="line">      &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></div><div class="line">	    <span class="tag">&lt;<span class="name">p</span>&gt;</span>我是浮动的，并且也居中了<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>父元素和子元素同时左浮动，然后父元素向右移动自身宽度的50%，此时子元素的左边缘是在中心点的，然后将子元素向左移动自身宽度的50%，就实现子元素的水平居中了。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="http://www.jianshu.com/p/3b318f962353" target="_blank" rel="external">关于浮动和清除浮动</a></p>
+<p><a href="https://segmentfault.com/a/1190000004237437" target="_blank" rel="external">CSS清除浮动float的三种方法总结，为什么清浮动？浮动会有那些影响？</a></p>
+<p><a href="http://www.jianshu.com/p/09bd5873bed4" target="_blank" rel="external">CSS中的浮动和清除浮动，梳理一下！</a></p>
+<p><a href="http://lightcss.com/all-about-clear-float/" target="_blank" rel="external">清理浮动的那些事儿——6种清理浮动的方法</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/浮动/" rel="tag"># 浮动</a>
+          
+            <a href="/tags/清除浮动/" rel="tag"># 清除浮动</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/07/Web前端安全问题——XSS和CSRF/" rel="next" title="Web前端安全问题——XSS和CSRF">
+                <i class="fa fa-chevron-left"></i> Web前端安全问题——XSS和CSRF
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Wu Xuan" />
+          <p class="site-author-name" itemprop="name">Wu Xuan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浮动及浮动的特征"><span class="nav-number">1.</span> <span class="nav-text">浮动及浮动的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浮动的特征"><span class="nav-number">1.1.</span> <span class="nav-text">浮动的特征</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮动会引起的问题"><span class="nav-number">2.</span> <span class="nav-text">浮动会引起的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除浮动"><span class="nav-number">3.</span> <span class="nav-text">清除浮动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用带有clear属性的空元素"><span class="nav-number">3.1.</span> <span class="nav-text">使用带有clear属性的空元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用CSS的-after伪元素"><span class="nav-number">3.2.</span> <span class="nav-text">使用CSS的:after伪元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#给父容器添加overflow属性"><span class="nav-number">3.3.</span> <span class="nav-text">给父容器添加overflow属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#让父容器也浮动"><span class="nav-number">3.4.</span> <span class="nav-text">让父容器也浮动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附加一个问题：如何让浮动元素实现水平居中？"><span class="nav-number">5.</span> <span class="nav-text">附加一个问题：如何让浮动元素实现水平居中？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Xuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
