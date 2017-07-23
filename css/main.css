@@ -1784,7 +1784,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #7dfff6;
+  background: #60ff42;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2633,6 +2633,19 @@ p {
 /* 注意图片引入路径 */
   background-image: url("/images/summer.jpeg");
   background-size: 100%;
+}
+.menu {
+  background: rgba(255,255,255,0.35);
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+  border-radius: initial;
+}
+.menu .menu-item {
+  margin: 0 12px;
+}
+.menu .menu-item a {
+  font-size: 14px;
 }
 code {
   color: #c7254e;
