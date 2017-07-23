@@ -1784,7 +1784,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #65168c;
+  background: #7dfff6;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2623,7 +2623,25 @@ embed {
 .links-of-blogroll-inline .links-of-blogroll-item {
   display: inline-block;
 }
+body {
+  font-family: 'Roboto Slab', "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+p {
+  font-size: 16px;
+}
 .header {
+/* 注意图片引入路径 */
   background-image: url("/images/summer.jpeg");
   background-size: 100%;
+}
+code {
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border: 1px solid #e1e1e8;
+  white-space: nowrap;
+  font-size: 14px;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: auto 3px;
 }
