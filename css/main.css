@@ -1784,7 +1784,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #63ff0a;
+  background: #1de90a;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2634,7 +2634,7 @@ p {
 }
 .header {
 /* 注意图片引入路径 */
-  background-image: url("/images/summer2.jpg");
+  background-image: url("/images/summer.jpg");
   background-size: 100%;
 }
 .brand {
