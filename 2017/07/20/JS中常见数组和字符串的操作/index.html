@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/20/JS中常见数组和字符串的操作/index.html">
 <meta property="og:site_name" content="Xuan&#39;s Blog">
 <meta property="og:description" content="​         本文主要涉及数组和字符串中的常见操作，对常用的一些函数做些整理，重点关注函数对应的操作以及返回值是什么。在整理过程中，给自己加深印象，同时以备日后混淆，可以翻看。">
-<meta property="og:updated_time" content="2017-08-01T09:18:54.448Z">
+<meta property="og:updated_time" content="2017-08-01T09:22:02.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中常见数组和字符串的操作">
 <meta name="twitter:description" content="​         本文主要涉及数组和字符串中的常见操作，对常用的一些函数做些整理，重点关注函数对应的操作以及返回值是什么。在整理过程中，给自己加深印象，同时以备日后混淆，可以翻看。">
@@ -418,7 +418,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> b = a.concat(<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);  <span class="comment">//参数也可以包括数组，比如 var b = a.concat(4,[5,6]); </span></div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//[1,2,3]</span></div><div class="line"><span class="built_in">console</span>.log(b);<span class="comment">//[1,2,3,4,5,6]</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>2.slice(start,end)</strong></p>
@@ -439,7 +438,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>];</div><div class="line"><span class="built_in">console</span>.log(a.join());  <span class="comment">//'a,b,c'  无参数，默认用逗号分隔</span></div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//  ['a','b','c'] </span></div><div class="line"><span class="built_in">console</span>.log(a.join(<span class="string">' '</span>)); <span class="comment">//'a b c'  指定空格作为分隔符</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <h4 id="改变原数组"><a href="#改变原数组" class="headerlink" title="改变原数组"></a>改变原数组</h4><p><strong>1.splice(index,howmany,item1,…..,itemX)</strong></p>
@@ -455,7 +453,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>,<span class="string">'green'</span>,<span class="string">'blue'</span>];</div><div class="line"><span class="keyword">var</span> removed = colors.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="string">'yellow'</span>,<span class="string">'orange'</span>); <span class="comment">//从索引为1处删除一个项目，并添加'yellow','orange'来替代被删除的元素				                   </span></div><div class="line"><span class="built_in">console</span>.log(colors);   <span class="comment">// ['red','yellow','orange','blue']  </span></div><div class="line"><span class="built_in">console</span>.log(removed);   <span class="comment">//['green']</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>2.reverse()</strong></p>
@@ -488,7 +485,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</div><div class="line">    b = a.pop();</div><div class="line"><span class="built_in">console</span>.log(a.length);   <span class="comment">//  2</span></div><div class="line"><span class="built_in">console</span>.log(b);     <span class="comment">//  3</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>5.push()</strong></p>
@@ -499,7 +495,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</div><div class="line">    b = a.push(<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</div><div class="line"><span class="built_in">console</span>.log(a);  <span class="comment">//[1,2,3,4,5,6]</span></div><div class="line"><span class="built_in">console</span>.log(b);  <span class="comment">//6</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>6.shift()</strong></p>
@@ -510,7 +505,6 @@
 </li>
 <li><p>例子 ：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</div><div class="line">    b = a.shift();</div><div class="line"><span class="built_in">console</span>.log(a.length);   <span class="comment">//  2</span></div><div class="line"><span class="built_in">console</span>.log(b);     <span class="comment">//  1</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>7.unshift()</strong></p>
@@ -534,7 +528,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str = <span class="string">'Hello world!'</span>;</div><div class="line"><span class="built_in">console</span>.log(str.toUpperCase());  <span class="comment">//'HELLO WORLD!'</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>2.toLowerCase()</strong></p>
@@ -557,7 +550,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str = <span class="string">'Hello world!'</span>;</div><div class="line"><span class="built_in">console</span>.log(str.indexOf(<span class="string">"Hello"</span>);     <span class="comment">// 0</span></div><div class="line"><span class="built_in">console</span>.log(str.indexOf(<span class="string">"World"</span>));    <span class="comment">//-1</span></div><div class="line"><span class="built_in">console</span>.log(str.indexOf(<span class="string">"world"</span>));    <span class="comment">//6</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>5.split(separator,limit)</strong></p>
@@ -568,7 +560,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str=<span class="string">'How are you'</span>;</div><div class="line"><span class="built_in">console</span>.log(str.split(<span class="string">" "</span>));   <span class="comment">//['How','are','you']</span></div><div class="line"><span class="built_in">console</span>.log(str.split(<span class="string">""</span>));    <span class="comment">//['h','o','w',' ','a','r','e',' ','y','o','u']</span></div><div class="line"><span class="built_in">console</span>.log(str.split(<span class="string">" "</span>,<span class="number">2</span>)); <span class="comment">//限定数组长度不能超过2 ['How','are']</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>6.substring(startIndex,stopIndex)</strong></p>
@@ -579,7 +570,6 @@
 </li>
 <li><p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str = <span class="string">'Hello world!'</span>;</div><div class="line"><span class="built_in">console</span>.log(str.substring(<span class="number">0</span>,<span class="number">5</span>));   <span class="comment">//'Hello'</span></div></pre></td></tr></table></figure>
-<p>​</p>
 </li>
 </ul>
 <p><strong>7.substr(start,length)</strong></p>
