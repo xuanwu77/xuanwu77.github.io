@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/20/JS中常见数组和字符串的操作/index.html">
 <meta property="og:site_name" content="Xuan&#39;s Blog">
 <meta property="og:description" content="​         本文主要涉及数组和字符串中的常见操作，对常用的一些函数做些整理，重点关注函数对应的操作以及返回值是什么。在整理过程中，给自己加深印象，同时以备日后混淆，可以翻看。">
-<meta property="og:updated_time" content="2017-08-01T09:10:13.450Z">
+<meta property="og:updated_time" content="2017-08-01T09:15:48.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中常见数组和字符串的操作">
 <meta name="twitter:description" content="​         本文主要涉及数组和字符串中的常见操作，对常用的一些函数做些整理，重点关注函数对应的操作以及返回值是什么。在整理过程中，给自己加深印象，同时以备日后混淆，可以翻看。">
@@ -374,7 +374,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,444
+                  1,440
                 </span>
               
 
@@ -431,7 +431,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>];</div><div class="line"><span class="keyword">var</span> b = a.slice(<span class="number">2</span>,<span class="number">3</span>);  <span class="comment">//也可以写成var b = a.slice(-3,-2); 因为数组长度为5，所以把参数中的负数加上5，等价于 var b = a.slice(2,3);</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">//['c']</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><strong>3.join()</strong></p>
+<p><strong>3.join(separator)</strong></p>
 <ul>
 <li><p>把数组中所有元素放入一个字符串，字符串中各元素是通过指定的分隔符进行分隔的。参数指定要使用的分隔符，如果省略该参数，则使用逗号作为分隔符。</p>
 </li>
@@ -442,9 +442,9 @@
 <p>​</p>
 </li>
 </ul>
-<h4 id="改变原数组"><a href="#改变原数组" class="headerlink" title="改变原数组"></a>改变原数组</h4><p><strong>1.splice()</strong></p>
+<h4 id="改变原数组"><a href="#改变原数组" class="headerlink" title="改变原数组"></a>改变原数组</h4><p><strong>1.splice(index,howmany,item1,…..,itemX)</strong></p>
 <ul>
-<li><p>方法强大，可实现添加和删除项目。arr.splice(index,howmany,item1,…..,itemX)参数说明：</p>
+<li><p>方法强大，可实现添加和删除项目。</p>
 <ul>
 <li>index ： 必需。整数，规定添加/删除项目的位置，使用负数可从数组结尾处规定位置</li>
 <li>howmany ：必需。 要删除的项目数量。如果设置为 0，则不会删除项目</li>
@@ -454,7 +454,7 @@
 <li><p>返回被删除的元素</p>
 </li>
 <li><p>例子：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>,<span class="string">'green'</span>,<span class="string">'blue'</span>];</div><div class="line"><span class="keyword">var</span> removed = colors.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="string">'yellow'</span>,<span class="string">'orange'</span>); <span class="comment">//从索引为1处删除一个项目，并添				                   加'yellow','orange'来替代被删除的元素</span></div><div class="line"><span class="built_in">console</span>.log(colors);   <span class="comment">// ['red','yellow','orange','blue']  </span></div><div class="line"><span class="built_in">console</span>.log(removed);   <span class="comment">//['green']</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>,<span class="string">'green'</span>,<span class="string">'blue'</span>];</div><div class="line"><span class="keyword">var</span> removed = colors.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="string">'yellow'</span>,<span class="string">'orange'</span>); <span class="comment">//从索引为1处删除一个项目，并添加'yellow','orange'来替代被删除的元素				                   </span></div><div class="line"><span class="built_in">console</span>.log(colors);   <span class="comment">// ['red','yellow','orange','blue']  </span></div><div class="line"><span class="built_in">console</span>.log(removed);   <span class="comment">//['green']</span></div></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 </ul>
@@ -526,7 +526,7 @@
 <h4 id="做题巩固"><a href="#做题巩固" class="headerlink" title="做题巩固"></a>做题巩固</h4><p>将数组var a=[1,2,3] 变成数组 [4,3,2,1] 。下面的方式正确的是？</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">A. a.reverse().unshift(4);</div><div class="line">B. a.push(4).reverse();</div><div class="line">C. a.push(4); a.reverse();</div><div class="line">D. splice(3,1,4).reverse();</div></pre></td></tr></table></figure>
 <p>正确答案是 ：A 和 C。重点是要知道每个函数执行了哪些操作，以及对应返回值。</p>
-<h3 id="数组的操作-1"><a href="#数组的操作-1" class="headerlink" title="数组的操作"></a>数组的操作</h3><p><strong>1.toUpperCase()</strong> </p>
+<h3 id="字符串的操作"><a href="#字符串的操作" class="headerlink" title="字符串的操作"></a>字符串的操作</h3><p><strong>1.toUpperCase()</strong> </p>
 <ul>
 <li><p>将字符串转换为大写</p>
 </li>
@@ -807,7 +807,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的操作"><span class="nav-number">1.</span> <span class="nav-text">数组的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#不改变原数组"><span class="nav-number">1.1.</span> <span class="nav-text">不改变原数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改变原数组"><span class="nav-number">1.2.</span> <span class="nav-text">改变原数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#做题巩固"><span class="nav-number">1.3.</span> <span class="nav-text">做题巩固</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的操作-1"><span class="nav-number">2.</span> <span class="nav-text">数组的操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的操作"><span class="nav-number">1.</span> <span class="nav-text">数组的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#不改变原数组"><span class="nav-number">1.1.</span> <span class="nav-text">不改变原数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改变原数组"><span class="nav-number">1.2.</span> <span class="nav-text">改变原数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#做题巩固"><span class="nav-number">1.3.</span> <span class="nav-text">做题巩固</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的操作"><span class="nav-number">2.</span> <span class="nav-text">字符串的操作</span></a></li></ol></div>
             
 
           </div>
