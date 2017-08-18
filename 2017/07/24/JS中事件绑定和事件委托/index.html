@@ -421,7 +421,7 @@
 <li>缺点：html代码与js代码紧密耦合</li>
 <li>例子：单击一个按钮，弹出警示框，有如下两种写法</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//原生函数写法</div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点击我"</span> <span class="attr">onclick</span>=<span class="string">"alert('Hello World!');"</span>&gt;</span>  //注意：为了避免使用HTML实体，在onclick的属性值（函数）中使用单引号</div><div class="line"></div><div class="line">//自定义函数写法</div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点击我"</span> <span class="attr">onclick</span>=<span class="string">"hello()"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  alert(<span class="string">"Hello World!"</span>);</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//原生函数写法</div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点击我"</span> <span class="attr">onclick</span>=<span class="string">"alert('Hello World!');"</span>&gt;</span>  //注意：为了避免使用HTML实体，在onclick的属性值（函数）中使用单引号</div><div class="line"></div><div class="line">//自定义函数写法</div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点击我"</span> <span class="attr">onclick</span>=<span class="string">"hello()"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">function hello()&#123;</div><div class="line">  alert("Hello World!");</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="在JavaScript代码中绑定"><a href="#在JavaScript代码中绑定" class="headerlink" title="在JavaScript代码中绑定"></a><strong>在<code>JavaScript</code>代码中绑定</strong></h4><ul>
 <li><p>每个元素都有自己的事件处理程序属性，即onXXX。如点击事件，即为<code>onclick</code> 。将这个属性的值设置为一个函数，就可以指定事件处理程序。语法：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">elementObject.onXXX=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">// 事件处理代码</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -608,7 +608,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -630,7 +630,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

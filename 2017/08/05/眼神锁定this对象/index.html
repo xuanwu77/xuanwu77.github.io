@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="this," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon1.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="JavaScript中的this对象很容易让人不清不楚，希望通过这次整理能做到既清又楚，好吧，来吧，眼神锁定this对象！ this的指向无法在函数定义的时候就确定，只有函数被调用的时候才能被确定， 这也体现了this指向是灵活的，根据不同情况，this可以指向不同的对象。此外，this还有一个特征: 在函数执行过程中，this不可以被重写，即无法变更: 123456789var a = 10;v">
+<meta name="keywords" content="this">
+<meta property="og:type" content="article">
+<meta property="og:title" content="眼神锁定this对象">
+<meta property="og:url" content="http://yoursite.com/2017/08/05/眼神锁定this对象/index.html">
+<meta property="og:site_name" content="Xuan&#39;s Blog">
+<meta property="og:description" content="JavaScript中的this对象很容易让人不清不楚，希望通过这次整理能做到既清又楚，好吧，来吧，眼神锁定this对象！ this的指向无法在函数定义的时候就确定，只有函数被调用的时候才能被确定， 这也体现了this指向是灵活的，根据不同情况，this可以指向不同的对象。此外，this还有一个特征: 在函数执行过程中，this不可以被重写，即无法变更: 123456789var a = 10;v">
+<meta property="og:image" content="http://yoursite.com/2017/08/05/眼神锁定this对象/HTML%20this.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/05/眼神锁定this对象/事件this.png">
+<meta property="og:updated_time" content="2017-08-18T12:38:22.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="眼神锁定this对象">
+<meta name="twitter:description" content="JavaScript中的this对象很容易让人不清不楚，希望通过这次整理能做到既清又楚，好吧，来吧，眼神锁定this对象！ this的指向无法在函数定义的时候就确定，只有函数被调用的时候才能被确定， 这也体现了this指向是灵活的，根据不同情况，this可以指向不同的对象。此外，this还有一个特征: 在函数执行过程中，this不可以被重写，即无法变更: 123456789var a = 10;v">
+<meta name="twitter:image" content="http://yoursite.com/2017/08/05/眼神锁定this对象/HTML%20this.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/05/眼神锁定this对象/"/>
+
+
+
+
+
+  <title>眼神锁定this对象 | Xuan's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xuan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">^每天务必做一点你所不愿意做的事情^</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于Me
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/05/眼神锁定this对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wu Xuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">眼神锁定this对象</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-05T20:23:25+08:00">
+                2017-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+
+
+
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/05/眼神锁定this对象/" class="leancloud_visitors" data-flag-title="眼神锁定this对象">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,624
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JavaScript中的<code>this</code>对象很容易让人不清不楚，希望通过这次整理能做到既清又楚，好吧，来吧，眼神锁定<code>this</code>对象！</p>
+<p><strong>this的指向无法在函数定义的时候就确定，只有函数被调用的时候才能被确定，</strong> 这也体现了<code>this</code>指向是灵活的，根据不同情况，this可以指向不同的对象。此外，<code>this</code>还有一个特征:</p>
+<p><strong>在函数执行过程中，this不可以被重写，即无法变更</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">20</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span> = obj; <span class="comment">// 这句话试图修改this，运行后会报错</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line">fn();</div></pre></td></tr></table></figure>
+<p>接下来就来探讨不同情况下this到底指向谁的问题。</p>
+<a id="more"></a>
+<h3 id="全局this"><a href="#全局this" class="headerlink" title="全局this"></a>全局this</h3><p>在浏览器中的全局环境中，this等价于window对象。这种情况相对简单，没有什么复杂情况需要考虑。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="built_in">window</span>); <span class="comment">//true</span></div><div class="line"></div><div class="line"><span class="comment">//用var声明一个变量和给this或者window添加属性是等价的。</span></div><div class="line"><span class="keyword">var</span> temp = <span class="number">10</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.temp); <span class="comment">//  10</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.temp); <span class="comment">//   10</span></div></pre></td></tr></table></figure>
+<p>注：由于本文主要讲解的是在浏览器环境中，所以文中的全局对象默认是window对象。（在nodejs环境中，全局对象为global）</p>
+<h3 id="函数中的this-与-object-中的this"><a href="#函数中的this-与-object-中的this" class="headerlink" title="函数中的this  与 object 中的this"></a>函数中的this  与 object 中的this</h3><p>在一个函数上下文中，this由调用者提供，由调用函数的方式来决定。<strong>如果调用者为函数，被某一个对象所拥有，那么该函数在调用时，内部的this指向该对象。如果函数独立调用，那么该函数内部的this将指向undefined</strong>。需指出，在非严格模式中，当this指向undefined时，它会被自动指向全局对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="meta">    'use strict'</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">fn1();  <span class="comment">//  undefined  调用者是函数fn，为独立调用，且在严格模式</span></div><div class="line">fn2();   <span class="comment">//  window    调用者是函数fn，为独立调用，且在非严格模式</span></div><div class="line"><span class="built_in">window</span>.fn1();  <span class="comment">// window   调用者是函数fn，被window所拥有</span></div></pre></td></tr></table></figure>
+<p>再来看一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">var</span> a = <span class="number">20</span>;</div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">b</span>: <span class="keyword">this</span>.a + <span class="number">20</span>,</div><div class="line">    <span class="attr">fn</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.a;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(obj.fn()); <span class="comment">//0</span></div><div class="line"><span class="built_in">console</span>.log(obj.b);  <span class="comment">//40</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> test = obj.fn;</div><div class="line"><span class="built_in">console</span>.log(test());  <span class="comment">// 运行报错</span></div></pre></td></tr></table></figure>
+<p>这个例子中输出三个结果：</p>
+<ul>
+<li><p><code>obj.fn()</code>输出的结果通过我们之前讲的方法很容易判断，调用者是函数<code>fn()</code>，被<code>obj</code>所拥有，所以<code>this</code>指向<code>obj</code>，因此<code>fn()</code>中的<code>this.a</code>应该是<code>obj</code>对象中的<code>a</code> ，即为0。</p>
+</li>
+<li><p><code>obj.b</code> <strong>并不是一个函数，因此他不适用于上面的规则</strong>。按照一般思维，<code>obj.b</code>中的<code>this.a</code>应该是<code>obj</code>内部的<code>a</code>啊，不是<code>0+20=20</code>吗？为什么是<code>40</code>呢?</p>
+<p>这里给出结论：<strong>当obj在全局声明时，无论<code>obj.b</code>在什么地方调用，这里的this都指向全局对象，而当obj在函数环境中声明时，这个this指向undefined，在非严格模式下，会自动转向全局对象。</strong></p>
+</li>
+<li><p>第三个输出考查对调用者与是否独立运行的理解：<code>test()</code> 作为调用者，尽管与<code>obj.fn</code>的引用相同，但仍然是独立调用，在严格模式下，<code>this</code>指向<code>undefined</code>，所以最终运行报错。</p>
+</li>
+</ul>
+<h3 id="构造函数与原型方法中的this"><a href="#构造函数与原型方法中的this" class="headerlink" title="构造函数与原型方法中的this"></a>构造函数与原型方法中的this</h3><p>在上一篇的<a href="http://www.wuxuann-n.cn/2017/08/01/JS%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/" target="_blank" rel="external">JS创建对象的方法详解</a> 中，我们有讲到用构造函数创建对象的方式，其中关键的是要知道<code>new</code> 操作符做了哪些事情，这里回顾一下，使用new操作符调用构造函数的过程分为：</p>
+<ul>
+<li>创建一个新对象；</li>
+<li>将构造函数的作用域赋给新对象 （因此this指向这个新对象，如：person）；</li>
+<li>执行构造函数中的代码（为这个新对象添加属性）；</li>
+<li>返回新对象。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line">Person.prototype.getName()&#123;</div><div class="line">   <span class="keyword">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person(<span class="string">"Jack"</span>, <span class="number">19</span>);</div><div class="line">person.name;  <span class="comment">// "Jack"</span></div><div class="line">person.getName(); <span class="comment">//  "Jack"</span></div></pre></td></tr></table></figure>
+<p>结合该例子来看，当<code>new</code>操作符调用构造函数时，<code>this</code>指向了一个新创建的对象，最后又将新的对象返回出来，被实例对象<code>person</code>接收。因此，我们可以说在函数被调用时<code>this</code>指向了实例对象<code>person</code>。</p>
+<p>而在原型方法中的<code>this</code> 指向，可以通过上面<strong>函数中的this</strong>方法判定，<code>getName</code>是调用者，被<code>person</code>所拥有，所以在通过<code>person.getName()</code>调用<code>this</code>时，<code>this</code>指向<code>person</code>对象。</p>
+<h3 id="call、apply显式改变this"><a href="#call、apply显式改变this" class="headerlink" title="call、apply显式改变this"></a>call、apply显式改变this</h3><p><code>call</code>  和<code>apply</code>都属于<code>Function.prototype</code>中的方法，所以所有的函数都具有这两个方法。</p>
+<p><code>call</code>与<code>apply</code>的功能其实是一样的，只是传递参数的方式有些区别。<strong>他们的第一个参数都为<code>this</code>将要指向的对象，从第二个参数开始，<code>call</code>以一个一个的形式传递，<code>apply</code>以数组的形式传递。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">num1, num2</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a + num1 + num2);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">20</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">fn.call(obj, <span class="number">20</span>, <span class="number">10</span>); <span class="comment">// 50 </span></div><div class="line">fn.apply(obj, [<span class="number">20</span>, <span class="number">10</span>]); <span class="comment">// 50</span></div></pre></td></tr></table></figure>
+<p>通过以上例子可以清楚地看出<code>call</code>与<code>apply</code>传参方式的区别，但输出结果是一样的。因为他们将<code>fn</code> 函数中的<code>this</code>显示改为了<code>obj</code>对象，所以<code>this.a</code> 取到的都是<code>obj.a</code>的值。、</p>
+<p>拓展一个<code>call</code>与<code>apply</code>会被用到的一个场景：将类数组对象想转换为数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a, b, c</span>) </span>&#123;</div><div class="line">    <span class="comment">// 看看arguments到底是不是数组</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);   </div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span> <span class="keyword">instanceof</span> <span class="built_in">Array</span>);  </div><div class="line"></div><div class="line">    <span class="comment">// 使用call/apply将arguments转换为数组, 返回结果为数组</span></div><div class="line">    <span class="keyword">var</span> arr1 = [].slice.call(<span class="built_in">arguments</span>);</div><div class="line">    <span class="keyword">var</span> arr2 = [].slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>);</div><div class="line">    <span class="built_in">console</span>.log(arr1);</div><div class="line">    <span class="built_in">console</span>.log(arr2);</div><div class="line">&#125;</div><div class="line">test(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);   </div><div class="line"></div><div class="line"><span class="comment">//结果:</span></div><div class="line"><span class="comment">// &#123; '0': 1, '1': 2, '2': 3&#125;</span></div><div class="line"><span class="comment">// false</span></div><div class="line"><span class="comment">// [1，2，3]</span></div><div class="line"><span class="comment">// [2，3]</span></div></pre></td></tr></table></figure>
+<p>arguments并非数组，只是访问单个参数的方式与访问数组元素的方式相同，不能使用<code>arguments.slice(1)</code>的方法获取指定数组元素，而需要用类似<code>[].slice.call(arguments, 1)</code>的这种方式去调用。</p>
+<h3 id="HTML-this"><a href="#HTML-this" class="headerlink" title="HTML this"></a>HTML this</h3><p>在HTML元素的属性放置js代码，this指向该元素，比如：</p>
+<p><code>&lt;div id=&quot;div&quot; onclick=&quot;console.log(this);&quot;&gt;&lt;/div&gt;</code></p>
+<p>当点击该div时，会在控制台打印出该元素对象：</p>
+<p><img src="/2017/08/05/眼神锁定this对象/HTML this.png" alt="HTML this"></p>
+<h3 id="DOM事件中的this"><a href="#DOM事件中的this" class="headerlink" title="DOM事件中的this"></a>DOM事件中的this</h3><p>在一个HTML DOM事件处理程序里面，this始终指向这个处理程序被所绑定到的HTML DOM节点</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div"</span> &gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">	<span class="built_in">document</span>.getElementById(<span class="string">"div"</span>).addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>);</div><div class="line">	&#125;);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当点击div时，会打印出绑定了该点击事件的DOM节点，即：</p>
+<p><img src="/2017/08/05/眼神锁定this对象/事件this.png" alt="事件this"></p>
+<p>以上就是经常会用到this对象的一些情况，分别对他们作了说明。。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://segmentfault.com/a/1190000002640298#articleHeader5" target="_blank" rel="external">JavaScript中的this陷阱的最全收集</a></p>
+<p><a href="http://www.jianshu.com/p/d647aa6d1ae6" target="_blank" rel="external">前端基础进阶（五）：全方位解读this</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/this/" rel="tag"># this</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/01/JS创建对象的方法详解/" rel="next" title="JS创建对象的方法详解">
+                <i class="fa fa-chevron-left"></i> JS创建对象的方法详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Wu Xuan" />
+          <p class="site-author-name" itemprop="name">Wu Xuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天务必做一点你所不愿意做的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xuanwu77" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/5247739197" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/wu-xuan-0707" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-hand-o-right"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+      
+        
+      
+        
+
+       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=16780426&auto=0&height=66"></iframe>
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局this"><span class="nav-number">1.</span> <span class="nav-text">全局this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数中的this-与-object-中的this"><span class="nav-number">2.</span> <span class="nav-text">函数中的this  与 object 中的this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数与原型方法中的this"><span class="nav-number">3.</span> <span class="nav-text">构造函数与原型方法中的this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#call、apply显式改变this"><span class="nav-number">4.</span> <span class="nav-text">call、apply显式改变this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-this"><span class="nav-number">5.</span> <span class="nav-text">HTML this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM事件中的this"><span class="nav-number">6.</span> <span class="nav-text">DOM事件中的this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Xuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uWzCrxhwzQX1zqyCM5w2t1hJ-gzGzoHsz", "h4IHjBvsAmvRtqHOaJMpI79W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
