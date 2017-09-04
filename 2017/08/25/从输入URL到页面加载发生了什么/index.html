@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="HTTP,URL,HTTPS,DNS,TCP,页面渲染," />
+  <meta name="keywords" content="URL,HTTP,HTTPS,DNS,TCP,页面渲染," />
 
 
 
@@ -94,7 +94,7 @@
 
 
 <meta name="description" content="关于 “从输入URL到页面加载发生了什么”这个问题，自己觉得有必要梳理一下，毕竟从深度和广度来说，它都是一个有话可谈的话题。我仅从前端和网络基础的角度来对该题做个总结！ 总体来说该过程分为以下几步:  DNS解析 TCP连接 发送HTTP请求 服务器处理请求并返回HTTP报文 浏览器解析渲染页面 连接结束">
-<meta name="keywords" content="HTTP,URL,HTTPS,DNS,TCP,页面渲染">
+<meta name="keywords" content="URL,HTTP,HTTPS,DNS,TCP,页面渲染">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从输入URL到页面加载发生了什么">
 <meta property="og:url" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/index.html">
@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/HTTP响应报文.png">
 <meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/浏览器渲染页面.png">
 <meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/TCP四次挥手.png">
-<meta property="og:updated_time" content="2017-09-04T02:58:40.519Z">
+<meta property="og:updated_time" content="2017-09-04T03:03:26.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从输入URL到页面加载发生了什么">
 <meta name="twitter:description" content="关于 “从输入URL到页面加载发生了什么”这个问题，自己觉得有必要梳理一下，毕竟从深度和广度来说，它都是一个有话可谈的话题。我仅从前端和网络基础的角度来对该题做个总结！ 总体来说该过程分为以下几步:  DNS解析 TCP连接 发送HTTP请求 服务器处理请求并返回HTTP报文 浏览器解析渲染页面 连接结束">
@@ -381,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,079
+                  3,084
                 </span>
               
 
@@ -432,7 +432,7 @@
 <li>先检查本地hosts文件是否有这个网址映射关系，如果有就调用这个IP地址映射，完成域名解析。</li>
 <li>否则，查找本地DNS解析器缓存，如果查找到则返回。</li>
 <li>否则，查找本地DNS服务器，如果查找到则返回。</li>
-<li>否则，按根域名服务器 –&gt;顶级域名服务器–&gt;次级域名服务器 –&gt;主机名的IP地址的顺序依次查找下去，直到查找到IP地址。以输入www.baidu.com为例，默认所有网址尾部是有个.的，这里即www.baidu.com.，这个.对应的就是根域名服务器，所以网址真正的解析过程为:<code>.</code> -&gt; <code>.com</code>-&gt; <code>google.com.</code>-&gt;<code>www.baidu.com.</code>。</li>
+<li>否则，按根域名服务器 –&gt;顶级域名服务器–&gt;次级域名服务器 –&gt;主机名的IP地址的顺序依次查找下去，直到查找到IP地址。以输入www.baidu.com为例，默认所有网址尾部是有个.的，这里即www.baidu.com.，这个.对应的就是根域名服务器，所以网址真正的解析过程为:<code>.</code> -&gt; <code>.com</code>-&gt; <code>baidu.com.</code>-&gt;<code>www.baidu.com.</code>。</li>
 </ul>
 <h4 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h4><p>HTTP协议是使用TCP作为其传输层协议的,在HTTP请求发送前还要通过<strong>三次握手</strong>建立连接。</p>
 <p><img src="/2017/08/25/从输入URL到页面加载发生了什么/TCP三次握手.png" alt="TCP三次握手"></p>
@@ -447,14 +447,14 @@
 <p><img src="/2017/08/25/从输入URL到页面加载发生了什么/HTTP请求报文.png" alt="HTTP请求报文"></p>
 <h5 id="补充：http请求方法"><a href="#补充：http请求方法" class="headerlink" title="补充：http请求方法"></a><strong>补充：http请求方法</strong></h5><p>HTTP/1.1 定义的请求方法有8种：GET、POST、PUT、DELETE、PATCH、HEAD、OPTIONS、TRACE。</p>
 <ul>
-<li>OPTIONS：返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送’*’的请求来测试服务器的功能性。 </li>
-<li>HEAD：向服务器索要与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。 </li>
-<li>GET：向特定的资源发出请求。 </li>
-<li>POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的创建和/或已有资源的修改。 </li>
-<li>PUT：向指定资源位置上传其最新内容。 </li>
-<li>DELETE：请求服务器删除Request-URI所标识的资源。 </li>
-<li>TRACE：回显服务器收到的请求，主要用于测试或诊断。 </li>
-<li>CONNECT：HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</li>
+<li><code>OPTIONS</code>：返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送’*’的请求来测试服务器的功能性。 </li>
+<li><code>HEAD</code>：向服务器索要与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。 </li>
+<li><code>GET</code>：向特定的资源发出请求。 </li>
+<li><code>POST</code>：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的创建和/或已有资源的修改。 </li>
+<li><code>PUT</code>：向指定资源位置上传其最新内容。 </li>
+<li><code>DELETE</code>：请求服务器删除Request-URI所标识的资源。 </li>
+<li><code>TRACE</code>：回显服务器收到的请求，主要用于测试或诊断。 </li>
+<li><code>CONNECT</code>：HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</li>
 </ul>
 <h5 id="补充：HTTPS"><a href="#补充：HTTPS" class="headerlink" title="补充：HTTPS"></a><strong>补充：HTTPS</strong></h5><p>现在https用的也是越来越多，所以这边穿插一点https的知识！</p>
 <p><img src="/2017/08/25/从输入URL到页面加载发生了什么/HTTPS.png" alt="HTTPS"></p>
@@ -476,9 +476,9 @@
 <p>这张图也挺经典的，就直接拿来用来讲解了。</p>
 <h5 id="整个过程解释"><a href="#整个过程解释" class="headerlink" title="整个过程解释"></a>整个过程解释</h5><p>浏览器接收到html文档，会被浏览器的HTML PARSER(HTML 解析器)解析， 通过词法分析将tag分析为相应的token，对HTML文档从上往下依次去解析token，这个过程的特点一是从上往下的，二是在此法分析的过程可以解析出link、script这样的标签，这些标签里面对应的外部资源会进一步由浏览器向网络发起请求（请求CSS和js等资源 ）。css相关的资源请求回来后会由浏览器生成相应的CSS树。将dom树和css树进行合并生成render tree渲染树，之后再进行布局layout和绘制paint，最后成功渲染出页面。</p>
 <h5 id="问1：为什么要把css放在head中？"><a href="#问1：为什么要把css放在head中？" class="headerlink" title="问1：为什么要把css放在head中？"></a><strong>问1：为什么要把css放在head中？</strong></h5><p>将css样式放在head中引入，会先加载css，之后浏览器就知道这个css规则了，然后他在渲染DOM节点的时候就按照已知的css规则来渲染。</p>
-<p>反例：如果把css内容放在DOM节点之后引入，会首先按照默认样式渲染dom内容（比如字体16px），之后加载完css发现样式的宽啊高啊都得改变，又得重新去渲染一遍，这时可能会出现屏幕的跳变，这个变化可能快可能慢，和你的电脑配、网络情况、页面规模等有关，用户体验差，所以得出结论，css要放在head中，而不要放在body中。 </p>
+<p>反例：如果把css内容放在DOM节点之后引入，会首先按照默认样式渲染dom内容（比如字体16px），之后加载完css发现样式的宽啊高啊都得改变，又得重新去渲染一遍，这时可能会出现屏幕的跳变，这个变化可能快可能慢，和你的电脑配置、网络情况、页面规模等有关，用户体验差，所以得出结论，css要放在head中，而不要放在body中。 </p>
 <h5 id="问2：为什么要把js放在body最下面？"><a href="#问2：为什么要把js放在body最下面？" class="headerlink" title="问2：为什么要把js放在body最下面？"></a><strong>问2：为什么要把js放在body最下面？</strong></h5><p>script引入的js会阻塞页面渲染，因为script的js代码有权改变dom结构和dom内容。</p>
-<p>遇到script会先加载和执行相应的js，该过程完毕后才会继续加载解析后续的页面。把js放在body最下面，一方面这样就不会阻塞页面的渲染了，能让页面更快地出来；放在下面，加载到它时，它已经能拿到所有标签，而放到中间，就有可能拿不到它后面的标签了，对后面标签所做的操作就失效了。</p>
+<p>遇到script会先加载和执行相应的js，该过程完毕后才会继续加载解析后续的页面。把js放在body最下面，一方面这样就不会阻塞页面的渲染了，能让页面更快地出来；另一方面放在下面，加载到它时，它已经能拿到所有标签，而放到中间，就有可能拿不到它后面的标签了，对后面标签所做的操作就失效了。</p>
 <h4 id="结束连接"><a href="#结束连接" class="headerlink" title="结束连接"></a>结束连接</h4><p><img src="/2017/08/25/从输入URL到页面加载发生了什么/TCP四次挥手.png" alt="TCP四次挥手"></p>
 <p><strong>1.第一次挥手：</strong> 主动方（可以使客户端，也可以是服务器端），设置Sequence Number，向被动方发送一个FIN报文段，告诉另一方我打算断开连接，后面不会再发送数据了，但是此时主动关闭方还是可以接收数据的。</p>
 <p><strong>2.第二次挥手：</strong>被动方收到了主动方发送的FIN报文段，向主动方回一个ACK报文段（Acknowledgment Number为Sequence Number + 1），告诉主动方，我“同意”你的关闭请求；</p>
@@ -518,9 +518,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
-          
             <a href="/tags/URL/" rel="tag"># URL</a>
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
           
             <a href="/tags/HTTPS/" rel="tag"># HTTPS</a>
           
