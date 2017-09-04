@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -93,20 +93,15 @@
 
 
 
-<meta name="description" content="这一过程要细说起来，涉及的东西应该说是非常广泛的，但是就前端开发而言，个人认为主要分为以下几个部分，这样理解起来不至于晦涩难懂，而且列出来的东西也差不多够了 在讲述主要过程的同时，我会对涉及到的某些要点做些补充说明，希望能帮助大家多理解一些东西。 总体来说分为以下几个过程:  DNS解析 TCP连接 发送HTTP请求 服务器处理请求并返回HTTP报文 浏览器解析渲染页面 连接结束  1.DNS解析">
-<meta name="keywords" content="URL">
+<meta name="description" content="每天务必做一点你所不愿意做的事情">
 <meta property="og:type" content="website">
-<meta property="og:title" content="从输入URL到页面加载发生了什么">
-<meta property="og:url" content="http://yoursite.com/从输入URL到页面加载发生了什么.html">
+<meta property="og:title" content="Xuan&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/tags/TCP/index.html">
 <meta property="og:site_name" content="Xuan&#39;s Blog">
-<meta property="og:description" content="这一过程要细说起来，涉及的东西应该说是非常广泛的，但是就前端开发而言，个人认为主要分为以下几个部分，这样理解起来不至于晦涩难懂，而且列出来的东西也差不多够了 在讲述主要过程的同时，我会对涉及到的某些要点做些补充说明，希望能帮助大家多理解一些东西。 总体来说分为以下几个过程:  DNS解析 TCP连接 发送HTTP请求 服务器处理请求并返回HTTP报文 浏览器解析渲染页面 连接结束  1.DNS解析">
-<meta property="og:image" content="https://segmentfault.com/img/bVp65j/view">
-<meta property="og:image" content="http://yoursite.com/从输入URL到页面加载发生了什么/浏览器渲染页面.png">
-<meta property="og:updated_time" content="2017-08-20T12:42:14.049Z">
+<meta property="og:description" content="每天务必做一点你所不愿意做的事情">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从输入URL到页面加载发生了什么">
-<meta name="twitter:description" content="这一过程要细说起来，涉及的东西应该说是非常广泛的，但是就前端开发而言，个人认为主要分为以下几个部分，这样理解起来不至于晦涩难懂，而且列出来的东西也差不多够了 在讲述主要过程的同时，我会对涉及到的某些要点做些补充说明，希望能帮助大家多理解一些东西。 总体来说分为以下几个过程:  DNS解析 TCP连接 发送HTTP请求 服务器处理请求并返回HTTP报文 浏览器解析渲染页面 连接结束  1.DNS解析">
-<meta name="twitter:image" content="https://segmentfault.com/img/bVp65j/view">
+<meta name="twitter:title" content="Xuan&#39;s Blog">
+<meta name="twitter:description" content="每天务必做一点你所不愿意做的事情">
 
 
 
@@ -134,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/从输入URL到页面加载发生了什么.html"/>
+  <link rel="canonical" href="http://yoursite.com/tags/TCP/"/>
 
 
 
 
 
-  <title>从输入URL到页面加载发生了什么 | Xuan's Blog</title>
+  <title>标签: TCP | Xuan's Blog</title>
   
 
 
@@ -165,7 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,45 +264,44 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-  <header class="post-header">
-
-	<h1 class="post-title" itemprop="name headline">从输入URL到页面加载发生了什么</h1>
-
-
-
-</header>
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h1>TCP<small>标签</small>
+      </h1>
+    </div>
 
     
-    
-      <p>这一过程要细说起来，涉及的东西应该说是非常广泛的，但是就前端开发而言，个人认为主要分为以下几个部分，这样理解起来不至于晦涩难懂，而且列出来的东西也差不多够了</p>
-<p>在讲述主要过程的同时，我会对涉及到的某些要点做些补充说明，希望能帮助大家多理解一些东西。</p>
-<p>总体来说分为以下几个过程:</p>
-<ol>
-<li>DNS解析</li>
-<li>TCP连接</li>
-<li>发送HTTP请求</li>
-<li>服务器处理请求并返回HTTP报文</li>
-<li>浏览器解析渲染页面</li>
-<li>连接结束</li>
-</ol>
-<p>1.DNS解析</p>
-<p>DNS其实是域名和IP地之间的 映射关系。</p>
-<p>2.TCP连接</p>
-<p>当TCP出现瓶颈时，HTTP也会受到影响</p>
-<p><img src="https://segmentfault.com/img/bVp65j/view" alt="img"></p>
-<hr>
-<p>为什么需要进行三次握手，而不是两次握手？</p>
-<p>原因是两次握手不可靠。比如，浏览器发送一个连接请求包A，但包A在半路上堵车了，浏览器就认为包A丢失了，所以重新发生一个请求包B给服务器。服务器收到请求，建立连接。两端进行通信，结束后关闭连接。但是这时候，包A到达了服务器，服务器不知道这是一个无效的包，所以进行响应。这时两次握手已经完成，两端就建立起一个无效的连接。但浏览器认为自己没发出请求，所以不会回应，这样就让服务器白白等待回应，浪费了服务器资源。而三次握手的机制下，浏览器知道自己并没有请求连接，会发送拒绝包给服务器，服务器收到回应后也会结束这次无效的连接。</p>
-<h3 id="浏览器解析渲染页面"><a href="#浏览器解析渲染页面" class="headerlink" title="浏览器解析渲染页面"></a>浏览器解析渲染页面</h3><p><strong>总体流程简单来说： 解析html以构建dom树-&gt;构建render树-&gt;布局render树-&gt;绘制render树</strong></p>
-<p><img src="/从输入URL到页面加载发生了什么/浏览器渲染页面.png" alt="浏览器渲染页面"></p>
-<p>这张图也挺经典的，就直接拿来用来讲解了。</p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://segmentfault.com/a/1190000006879700" target="_blank" rel="external">从输入URL到页面加载发生了什么</a></p>
-<p><a href="http://www.berlinix.com/net/from-url-input.php" target="_blank" rel="external">从输入URL到页面加载完的过程中都发生了什么事情？</a></p>
-<p><a href="http://www.guokr.com/question/554991/" target="_blank" rel="external">从输入 URL 到页面加载完的过程中都发生了什么事情？</a></p>
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/08/25/从输入URL到页面加载发生了什么/" itemprop="url">
+              
+                <span itemprop="name">从输入URL到页面加载发生了什么</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-08-25T19:37:39+08:00"
+              content="2017-08-25" >
+          08-25
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
     
   </div>
+
+  
 
 
           </div>
@@ -315,10 +309,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -339,17 +329,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -364,7 +345,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -375,7 +356,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -386,7 +367,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -443,22 +424,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器解析渲染页面"><span class="nav-number">1.</span> <span class="nav-text">浏览器解析渲染页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">2.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
