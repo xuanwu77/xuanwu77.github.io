@@ -104,7 +104,9 @@
 <meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/HTTP请求报文.png">
 <meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/HTTPS.png">
 <meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/HTTP响应报文.png">
-<meta property="og:updated_time" content="2017-09-04T02:53:38.461Z">
+<meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/浏览器渲染页面.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/25/从输入URL到页面加载发生了什么/TCP四次挥手.png">
+<meta property="og:updated_time" content="2017-09-04T02:54:42.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从输入URL到页面加载发生了什么">
 <meta name="twitter:description" content="关于 “从输入URL到页面加载发生了什么”这个问题，自己觉得有必要梳理一下，毕竟从深度和广度来说，它都是一个有话可谈的话题。我仅从前端和网络基础的角度来对该题做个总结！ 总体来说该过程分为以下几步:  DNS解析 TCP连接 发送HTTP请求 服务器处理请求并返回HTTP报文 浏览器解析渲染页面 连接结束">
@@ -379,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,966
+                  3,079
                 </span>
               
 
@@ -395,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  7
+                  11
                 </span>
               
             </div>
@@ -468,26 +470,26 @@
 <li>根据CSS生成CSSOM</li>
 <li>将DOM和CSSOM整合形成Render Tree</li>
 <li>根据Render Tree开始渲染和展示</li>
-<li>遇到<script>时，会执行并阻塞渲染</li>
+<li>遇到<code>&lt;script&gt;</code>时，会执行并阻塞渲染</li>
 </ul>
-<p><img src="从输入URL到页面加载发生了什么/浏览器渲染页面.png" alt="浏览器渲染页面"></p>
+<p><img src="/2017/08/25/从输入URL到页面加载发生了什么/浏览器渲染页面.png" alt="浏览器渲染页面"></p>
 <p>这张图也挺经典的，就直接拿来用来讲解了。</p>
 <h5 id="整个过程解释："><a href="#整个过程解释：" class="headerlink" title="整个过程解释："></a><strong>整个过程解释</strong>：</h5><p>浏览器接收到html文档，会被浏览器的HTML PARSER(HTML 解析器)解析， 通过词法分析将tag分析为相应的token，对HTML文档从上往下依次去解析token，这个过程的特点一是从上往下的，二是在此法分析的过程可以解析出link、script这样的标签，这些标签里面对应的外部资源会进一步由浏览器向网络发起请求（请求CSS和js等资源 ）。css相关的资源请求回来后会由浏览器生成相应的CSS树。将dom树和css树进行合并生成render tree渲染树，之后再进行布局layout和绘制paint，最后成功渲染出页面。</p>
 <h5 id="问1：为什么要把css放在head中？"><a href="#问1：为什么要把css放在head中？" class="headerlink" title="问1：为什么要把css放在head中？"></a><strong>问1：为什么要把css放在head中？</strong></h5><p>将css样式放在head中引入，会先加载css，之后浏览器就知道这个css规则了，然后他在渲染DOM节点的时候就按照已知的css规则来渲染。</p>
 <p>反例：如果把css内容放在DOM节点之后引入，会首先按照默认样式渲染dom内容（比如字体16px），之后加载完css发现样式的宽啊高啊都得改变，又得重新去渲染一遍，这时可能会出现屏幕的跳变，这个变化可能快可能慢，和你的电脑配、网络情况、页面规模等有关，用户体验差，所以得出结论，css要放在head中，而不要放在body中。 </p>
 <h5 id="问2：为什么要把js放在body最下面？"><a href="#问2：为什么要把js放在body最下面？" class="headerlink" title="问2：为什么要把js放在body最下面？"></a><strong>问2：为什么要把js放在body最下面？</strong></h5><p>script引入的js会阻塞页面渲染，因为script的js代码有权改变dom结构和dom内容。</p>
 <p>遇到script会先加载和执行相应的js，该过程完毕后才会继续加载解析后续的页面。把js放在body最下面，一方面这样就不会阻塞页面的渲染了，能让页面更快地出来；放在下面，加载到它时，它已经能拿到所有标签，而放到中间，就有可能拿不到它后面的标签了，对后面标签所做的操作就失效了。</p>
-<h4 id="结束连接"><a href="#结束连接" class="headerlink" title="结束连接"></a>结束连接</h4><p><img src="从输入URL到页面加载发生了什么/TCP四次挥手.png" alt="TCP四次挥手"></p>
+<h4 id="结束连接"><a href="#结束连接" class="headerlink" title="结束连接"></a>结束连接</h4><p><img src="/2017/08/25/从输入URL到页面加载发生了什么/TCP四次挥手.png" alt="TCP四次挥手"></p>
 <p><strong>1.第一次挥手：</strong> 主动方（可以使客户端，也可以是服务器端），设置Sequence Number，向被动方发送一个FIN报文段，告诉另一方我打算断开连接，后面不会再发送数据了，但是此时主动关闭方还是可以接收数据的。</p>
 <p><strong>2.第二次挥手：</strong>被动方收到了主动方发送的FIN报文段，向主动方回一个ACK报文段（Acknowledgment Number为Sequence Number + 1），告诉主动方，我“同意”你的关闭请求；</p>
 <p><strong>3.第三次挥手：</strong>被动方收到断开连接信息时，可能还有数据没有传完，所以等待数据全部传输结束后，再发送一条 FIN 为 1 的信息，告诉对方也做了断开连接的准备，但没有断开。</p>
 <p><strong>4.第四次挥手：</strong> 主动方收到被动方发送的FIN报文段，向被动方发送ACK报文段，被动方收到主动方的ACK报文段以后，就关闭连接；此时，主动方等待2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，主动方也可以关闭连接了。</p>
 <h5 id="问：为什么需要进行四次挥手？"><a href="#问：为什么需要进行四次挥手？" class="headerlink" title="问：为什么需要进行四次挥手？"></a>问：为什么需要进行四次挥手？</h5><p>第一次挥手是在主动方没有数据需要再发送过去的情况下发起的，第二挥手是被动方发送ACK表示同意，当然，如果在第二次挥手时被动方也向主动方发送FIN包请求断开连接似乎也行，但考虑到它自己有可能还有数据没有发送完，所以当它真的没有数据可发了，才会进行第三次挥手发送FIN包告诉主动方，我也不再发送数据了，之后主动发再送ACK以表确认，即第四次挥手。</p>
 <p>简而言之，一端断开连接需要两次挥手（请求和回应），两端断开连接就需要四次挥手了。</p>
-<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://segmentfault.com/a/1190000006879700">从输入URL到页面加载发生了什么</a></p>
-<p><a href="http://www.berlinix.com/net/from-url-input.php">从输入URL到页面加载完的过程中都发生了什么事情？</a></p>
-<p><a href="http://www.guokr.com/question/554991/">从输入 URL 到页面加载完的过程中都发生了什么事情？</a></p>
-</script></li></ul>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://segmentfault.com/a/1190000006879700" target="_blank" rel="external">从输入URL到页面加载发生了什么</a></p>
+<p><a href="http://www.berlinix.com/net/from-url-input.php" target="_blank" rel="external">从输入URL到页面加载完的过程中都发生了什么事情？</a></p>
+<p><a href="http://www.guokr.com/question/554991/" target="_blank" rel="external">从输入 URL 到页面加载完的过程中都发生了什么事情？</a></p>
+
       
     </div>
 
@@ -709,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS解析"><span class="nav-number">1.</span> <span class="nav-text">DNS解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DNS查询"><span class="nav-number">1.1.</span> <span class="nav-text">DNS查询</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP连接"><span class="nav-number">2.</span> <span class="nav-text">TCP连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#问：为什么需要进行三次握手，而不是两次握手？"><span class="nav-number">2.1.</span> <span class="nav-text">问：为什么需要进行三次握手，而不是两次握手？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送HTTP请求"><span class="nav-number">3.</span> <span class="nav-text">发送HTTP请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#补充：http请求方法"><span class="nav-number">3.1.</span> <span class="nav-text">补充：http请求方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#补充：HTTPS"><span class="nav-number">3.2.</span> <span class="nav-text">补充：HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#为什么HTTPS安全"><span class="nav-number">3.2.1.</span> <span class="nav-text">为什么HTTPS安全</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器处理请求并返回HTTP报文"><span class="nav-number">4.</span> <span class="nav-text">服务器处理请求并返回HTTP报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器解析渲染页面"><span class="nav-number">5.</span> <span class="nav-text">浏览器解析渲染页面</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS解析"><span class="nav-number">1.</span> <span class="nav-text">DNS解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DNS查询"><span class="nav-number">1.1.</span> <span class="nav-text">DNS查询</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP连接"><span class="nav-number">2.</span> <span class="nav-text">TCP连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#问：为什么需要进行三次握手，而不是两次握手？"><span class="nav-number">2.1.</span> <span class="nav-text">问：为什么需要进行三次握手，而不是两次握手？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送HTTP请求"><span class="nav-number">3.</span> <span class="nav-text">发送HTTP请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#补充：http请求方法"><span class="nav-number">3.1.</span> <span class="nav-text">补充：http请求方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#补充：HTTPS"><span class="nav-number">3.2.</span> <span class="nav-text">补充：HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#为什么HTTPS安全"><span class="nav-number">3.2.1.</span> <span class="nav-text">为什么HTTPS安全</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器处理请求并返回HTTP报文"><span class="nav-number">4.</span> <span class="nav-text">服务器处理请求并返回HTTP报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器解析渲染页面"><span class="nav-number">5.</span> <span class="nav-text">浏览器解析渲染页面</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#整个过程解释："><span class="nav-number">5.1.</span> <span class="nav-text">整个过程解释：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#问1：为什么要把css放在head中？"><span class="nav-number">5.2.</span> <span class="nav-text">问1：为什么要把css放在head中？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#问2：为什么要把js放在body最下面？"><span class="nav-number">5.3.</span> <span class="nav-text">问2：为什么要把js放在body最下面？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束连接"><span class="nav-number">6.</span> <span class="nav-text">结束连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#问：为什么需要进行四次挥手？"><span class="nav-number">6.1.</span> <span class="nav-text">问：为什么需要进行四次挥手？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
